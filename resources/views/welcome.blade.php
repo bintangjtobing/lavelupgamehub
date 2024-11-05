@@ -19,6 +19,8 @@
     <link rel="shortcut icon"
         href="https://res.cloudinary.com/boxityapp/image/upload/v1730810393/levelupgaming/nupfkufgxx6oigtb75ih.png"
         type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/17.6.1/lazyload.min.js"></script>
+
     <link rel="stylesheet" href="{{ asset('frontend/css/line-awesome.css')}}">
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/swiper.css')}}">
@@ -312,7 +314,11 @@
     <script src="{{ asset('frontend/js/main.js') }}"></script>
 
     @stack('script')
-
+    <script>
+        var lazyLoadInstance = new LazyLoad({
+            elements_selector: ".lazy" // Targets elements with the 'lazy' class
+        });
+    </script>
 </body>
 
 </html>
