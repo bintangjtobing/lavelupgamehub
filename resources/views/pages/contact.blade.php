@@ -1,4 +1,5 @@
 @extends('welcome')
+@section('title', 'Contact us')
 
 @push('css')
 @endpush

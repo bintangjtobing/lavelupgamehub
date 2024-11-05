@@ -1,4 +1,5 @@
 @extends('welcome')
+@section('title', 'FAQ')
 
 @section('content')
 <section class="faq-section ptb-120">

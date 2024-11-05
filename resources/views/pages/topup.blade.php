@@ -1,4 +1,5 @@
 @extends('welcome')
+@section('title', 'Top-Up and Vouchers')
 
 @push('css')
 @endpush
