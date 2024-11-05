@@ -93,7 +93,7 @@
     <div class="preloader">
         <div class="loader-inner">
             <div class="loader-circle">
-                <img src="https://res.cloudinary.com/boxityapp/image/upload/v1730810393/levelupgaming/zgsvozukgxyrpnybvg22.png"
+                <img src="https://res.cloudinary.com/boxityapp/image/upload/v1730820799/levelupgaming/donation/ccterurxh9rxeaglqikl.gif"
                     alt="Preloader">
             </div>
             <div class="loader-line-mask">

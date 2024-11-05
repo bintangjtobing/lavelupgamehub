@@ -12,7 +12,7 @@
             <div class="row justify-content-center mb-30-none">
                 @foreach($games as $game)
                 <div class="col-xl-2 col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-30">
-                    <a href="{{ url($game->game_url) }}">
+                    <a href="{{ url($game->game_url) }}" target="_blank">
                         <div class="topup-item">
                             <div class="topup-thumb">
                                 <img src="{{ url($game->image_url) }}" data-src="{{ url($game->data_src) }}"
