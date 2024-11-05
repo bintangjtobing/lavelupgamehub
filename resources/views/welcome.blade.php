@@ -231,9 +231,9 @@
                         <div class="footer-widget">
                             <h4 class="widget-title">Link Bermanfaat</h4>
                             <ul class="footer-list">
-                                <li><a href="/about-us">Tentang Kami</a></li>
-                                <li><a href="/privacy-policy">Kebijakan Privasi</a></li>
-                                <li><a href="/terms">Syarat dan Ketentuan</a></li>
+                                <li><a href="/about">Tentang Kami</a></li>
+                                <li><a href="#">Kebijakan Privasi</a></li>
+                                <li><a href="#">Syarat dan Ketentuan</a></li>
                             </ul>
                         </div>
                     </div>
@@ -244,15 +244,15 @@
                             <h4 class="widget-title">Berlangganan</h4>
                             <p>Ikuti update terbaru tentang berita gaming, diskon eksklusif, dan penawaran spesial.
                                 Langganan newsletter kami dan tetap jadi yang terdepan dalam game!</p>
-                            <ul class="footer-list two">
+                            <ul class="footer-list two" style="list-style-type:none;">
                                 <form action="/subscribe" method="post">
                                     <li>
                                         <input type="text" placeholder="Nama" name="name" class="form--control">
-                                        <span class="input-icon"><i class="las la-user"></i></span>
+                                        <span class="input-icon"></span>
                                     </li>
                                     <li>
                                         <input type="email" name="email" placeholder="Email" class="form--control">
-                                        <span class="input-icon"><i class="las la-envelope"></i></span>
+                                        <span class="input-icon"></span>
                                     </li>
                                     <li>
                                         <button type="submit" class="btn--base sub-btn">Berlangganan <i
@@ -273,7 +273,8 @@
                                 <a href="https://www.wa.me"><i class="lab la-whatsapp"></i> Whatsapp</a>
                             </li>
                             <li>
-                                <a href="https://www.facebook.com"><i class="lab la-facebook-f"></i> Facebook</a>
+                                <a href="https://www.facebook.com/profile.php?id=61568151335436"><i
+                                        class="lab la-facebook-f"></i> Facebook</a>
                             </li>
                             <li>
                                 <a href="https://www.instagram.com/levelupmarketgaming"><i class="lab la-instagram"></i>
