@@ -69,16 +69,21 @@
     <meta name="theme-color" content="#9CFF1E">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
-
-    <!-- Meta untuk verifikasi dan analytics -->
-    <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE">
     <meta name="msvalidate.01" content="YOUR_BING_VERIFICATION_CODE">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_ANALYTICS_ID"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZMQ2EZKSBP"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'YOUR_ANALYTICS_ID');
+
+        gtag('config', 'G-ZMQ2EZKSBP');
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "oturnn0i9y");
     </script>
     @stack('css')
 </head>

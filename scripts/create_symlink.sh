@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Create a symlink for public_html pointing to the public directory in your repo
-ln -s /home/levelupgame/repo/levelup/public/ /home/levelupgame/public_html
+ln -s /home/levelupgame/repo/levelup/public /home/levelupgame/public_html
 
 # Set permissions for the symlink target if needed
 find /home/levelupgame/public_html -type d -exec chmod 755 {} \;
