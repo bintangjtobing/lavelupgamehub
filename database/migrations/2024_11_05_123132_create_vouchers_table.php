@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('vouchers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->string('image_url');
-            $table->string('voucher_url');
+            $table->string('name'); // Nama voucher
+            $table->string('slug')->unique(); // Slug untuk URL
+            $table->string('image_url'); // URL gambar utama
+            $table->string('data_src'); // URL gambar data-src untuk lazy loading
+            $table->string('voucher_url'); // URL voucher
             $table->timestamps();
         });
     }

@@ -13,6 +13,7 @@ class Game extends Model
         'name',
         'slug',
         'image',
+        'data_src',
         'created_date',
     ];
 

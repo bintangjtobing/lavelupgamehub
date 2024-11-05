@@ -17,7 +17,8 @@
                     <a href="{{ url($game->game_url) }}">
                         <div class="topup-item">
                             <div class="topup-thumb">
-                                <img src="{{ url($game->image_url) }}" alt="{{ $game->name }} - LevelUp Gaming Market">
+                                <img src="{{ url($game->image_url) }}" data-src="{{ url($game->data_src) }}"
+                                    alt="{{ $game->name }} - LevelUp Gaming Market" class="lazy">
                             </div>
                             <div class="topup-content">
                                 <h5 class="title">{{ $game->name }}</h5>
@@ -36,7 +37,7 @@
         </div>
 
         <!-- Vouchers Area -->
-        <div class="voucher-area pt-120">
+        <div class="topup-area pt-120">
             <div class="section-header text-center">
                 <h2 class="section-title"> <span class="text--base">VOUCHER GAMES</span></h2>
             </div>
@@ -46,8 +47,8 @@
                     <a href="{{ url($voucher->voucher_url) }}" target="_blank">
                         <div class="topup-item">
                             <div class="topup-thumb">
-                                <img src="{{ url($voucher->image_url) }}"
-                                    alt="{{ $voucher->name }} - LevelUp Gaming Market">
+                                <img src="{{ url($voucher->image_url) }}" data-src="{{ url($voucher->data_src) }}"
+                                    alt="{{ $voucher->name }} - LevelUp Gaming Market" class="lazy">
                             </div>
                             <div class="topup-content">
                                 <h5 class="title">{{ $voucher->name }}</h5>

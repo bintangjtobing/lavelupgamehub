@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name'); // Nama game
             $table->string('slug')->unique(); // Slug untuk URL
-            $table->string('image_url'); // URL gambar
+            $table->string('image_url'); // URL gambar utama
+            $table->string('data_src'); // URL gambar data-src untuk lazy loading
             $table->string('game_url'); // URL game
             $table->timestamps();
         });

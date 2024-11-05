@@ -13,6 +13,7 @@ class Voucher extends Model
     protected $fillable = [
         'name',
         'slug',
+        'data_src',
         'image_url',
         'voucher_url',
     ];
