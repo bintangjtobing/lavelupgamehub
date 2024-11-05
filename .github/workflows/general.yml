@@ -1,0 +1,49 @@
+name: LevelUp Game Market Deployment
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+
+      - name: Install Dependencies
+        run: |
+          composer install
+          cp .env.production .env
+          php artisan key:generate --ansi
+
+      - name: Deploy Laravel Project
+        if: github.ref == 'refs/heads/main'
+        run: |
+          # Deploy application files
+          sshpass -p 'LibrA21101998' rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ levelupgame@153.92.5.213:/home/levelupgame/repo/levelup/
+
+          # Update server
+          sshpass -p 'LibrA21101998' ssh -o StrictHostKeyChecking=no levelupgame@153.92.5.213 'cd /home/levelupgame/repo/levelup && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache'
+
+      - name: Create Symlink
+        run: |
+          sshpass -p 'LibrA21101998' ssh -o StrictHostKeyChecking=no levelupgame@153.92.5.213 'bash -s' < scripts/create_symlink.sh
+
+      - name: Set Permissions
+        run: |
+          sshpass -p 'LibrA21101998' ssh -o StrictHostKeyChecking=no levelupgame@153.92.5.213 'find /home/levelupgame/repo/levelup/storage/ -type d -exec chmod 775 {} \;'
+          sshpass -p 'LibrA21101998' ssh -o StrictHostKeyChecking=no levelupgame@153.92.5.213 'find /home/levelupgame/repo/levelup/bootstrap/cache/ -type d -exec chmod 775 {} \;'
+
+          # Set permissions for the public directory if needed
+          sshpass -p 'LibrA21101998' ssh -o StrictHostKeyChecking=no levelupgame@153.92.5.213 'find /home/levelupgame/public_html/ -type d -exec chmod 755 {} \;'
+          sshpass -p 'LibrA21101998' ssh -o StrictHostKeyChecking=no levelupgame@153.92.5.213 'find /home/levelupgame/public_html/ -type f -exec chmod 644 {} \;'

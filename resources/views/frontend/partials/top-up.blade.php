@@ -12,11 +12,10 @@
             <div class="row justify-content-center mb-30-none">
                 @foreach($games as $game)
                 <div class="col-xl-2 col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-30">
-                    <a href="https://topup.levelupgamehub.com/game{{ $game->slug }}">
+                    <a href="{{ url($game->game_url) }}">
                         <div class="topup-item">
                             <div class="topup-thumb">
-                                <img src="{{ asset('backend/images/top-up-game/' . $game->image) }}"
-                                    alt="{{ $game->name }} - LevelUp Gaming Market">
+                                <img src="{{ url($game->image_url) }}" alt="{{ $game->name }} - LevelUp Gaming Market">
                             </div>
                             <div class="topup-content">
                                 <h5 class="title">{{ $game->name }}</h5>

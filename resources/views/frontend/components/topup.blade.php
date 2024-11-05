@@ -21,7 +21,7 @@
                             </div>
                             <div class="topup-content">
                                 <h5 class="title">{{ $game->name }}</h5>
-                                <p>{{ $game->created_date->format('M d, Y') }}</p>
+                                <p>{{ \Carbon\Carbon::parse($game->created_date)->format('M d, Y') }}</p>
                             </div>
                         </div>
                     </a>
