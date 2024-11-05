@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="topup-btn-area pt-60 text-center">
-            <a href="{{ route('topup.index') }}" class="btn--base">Lihat semua games</a>
+            <a href="/topup" class="btn--base">Lihat semua games</a>
         </div>
     </div>
 </section>
