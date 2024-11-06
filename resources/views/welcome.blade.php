@@ -246,8 +246,8 @@
                             <h4 class="widget-title">Link Bermanfaat</h4>
                             <ul class="footer-list">
                                 <li><a href="/about">Tentang Kami</a></li>
-                                <li><a href="#">Kebijakan Privasi</a></li>
-                                <li><a href="#">Syarat dan Ketentuan</a></li>
+                                <li><a href="/privacy-policy">Kebijakan Privasi</a></li>
+                                <li><a href="/terms-and-conditions">Syarat dan Ketentuan</a></li>
                             </ul>
                         </div>
                     </div>

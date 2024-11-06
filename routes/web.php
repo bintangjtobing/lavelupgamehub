@@ -31,3 +31,5 @@ Route::get('/faq', function () {
 });
 
 Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
+Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
+Route::view('/terms-and-conditions', 'pages.terms-condition')->name('terms-and-conditions');
