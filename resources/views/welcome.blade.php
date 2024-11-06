@@ -333,7 +333,9 @@
                         <p>&copy; Copyright -<span class="text--base">LevelUp Gaming Market</span> {{ date('Y') }}.</p>
                         <ul class="footer-social-list">
                             <li>
-                                <a href="https://www.wa.me"><i class="lab la-whatsapp"></i> Whatsapp</a>
+                                <a
+                                    href="https://wa.me/6285195922910?text=Halo%20kak%20LevelUp!%20Saya%20mau%20tanya-tanya%20seputar%20voucher%20game%20dan%20cara%20topup%20disini%20dong"><i
+                                        class="lab la-whatsapp"></i> Whatsapp</a>
                             </li>
                             <li>
                                 <a href="https://www.facebook.com/profile.php?id=61568151335436"><i
