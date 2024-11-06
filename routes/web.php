@@ -3,10 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Game;
 use App\Models\Voucher;
+use App\Models\Review;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/', function () {
     $games = Game::orderBy('created_at', direction: 'DESC')->limit('18')->get();
-    return view('pages.index', compact('games'));
+    $reviews = Review::where('agree_terms', true)->orderBy('created_at', 'DESC')->get();
+    return view('pages.index', compact('games','reviews'));
 });
 
 Route::get('/about', function () {
@@ -26,3 +29,5 @@ Route::get('/topup', function () {
 Route::get('/faq', function () {
     return view('pages.faq');
 });
+
+Route::post('/review', [ReviewController::class, 'store'])->name('review.store');

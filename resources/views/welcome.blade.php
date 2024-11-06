@@ -253,27 +253,56 @@
                     </div>
 
                     <!-- Newsletter -->
-                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30">
+                    <div class="col-xxl-6 col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30">
+                        @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                        @endif
                         <div class="footer-widget">
-                            <h4 class="widget-title">Berlangganan</h4>
-                            <p>Ikuti update terbaru tentang berita gaming, diskon eksklusif, dan penawaran spesial.
-                                Langganan newsletter kami dan tetap jadi yang terdepan dalam game!</p>
-                            <ul class="footer-list two" style="list-style-type:none;">
-                                <form action="/subscribe" method="post">
+                            <h4 class="widget-title">Tulis Review</h4>
+                            <p style="margin-top:0;">Berikan pendapat Anda tentang layanan kami. Kami menghargai setiap
+                                masukan Anda!</p>
+                            <form action="{{ route('review.store') }}" method="post" id="reviewForm">
+                                @csrf
+                                <ul class="footer-list two" style="list-style-type:none;">
                                     <li>
-                                        <input type="text" placeholder="Nama" name="name" class="form--control">
+                                        <input type="text" name="name" placeholder="Nama" class="form--control"
+                                            required>
                                         <span class="input-icon"></span>
                                     </li>
-                                    <li>
-                                        <input type="email" name="email" placeholder="Email" class="form--control">
-                                        <span class="input-icon"></span>
+                                    <li class="row">
+                                        <div class="col-md-6">
+                                            <input type="email" name="email" placeholder="Email (Optional)"
+                                                class="form--control">
+                                            <span class="input-icon"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="phone" placeholder="No Telepon"
+                                                class="form--control" required>
+                                            <span class="input-icon"></span>
+                                        </div>
                                     </li>
                                     <li>
-                                        <button type="submit" class="btn--base sub-btn">Berlangganan <i
-                                                class="las la-arrow-right ms-1"></i></button>
+                                        <textarea name="message" placeholder="Tulis Review Anda" class="form--control"
+                                            required></textarea>
                                     </li>
-                                </form>
-                            </ul>
+                                    <li
+                                        style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-left: 0;">
+                                        {{-- <label for="agreeTerms"
+                                            style="line-height: 1.6; display: inline-block;"></label> --}}
+                                        <small class="text-muted">Dengan
+                                            ini, saya
+                                            setuju bahwa review ini dapat digunakan untuk publikasi di Google Review,
+                                            media sosial, dan situs web terkait LevelUp Gaming Market.</small>
+                                    </li>
+                                    <li>
+                                        <button type="submit" class="btn--base sub-btn" disabled id="submitBtn">
+                                            Kirim Review <i class="las la-arrow-right ms-1"></i>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -319,6 +348,12 @@
             elements_selector: ".lazy" // Targets elements with the 'lazy' class
         });
     </script>
+    <script>
+        document.getElementById('agreeTerms').addEventListener('change', function() {
+            document.getElementById('submitBtn').disabled = !this.checked;
+        });
+    </script>
+
 </body>
 
 </html>
