@@ -20,8 +20,9 @@
                         <div class="testimonial-item">
                             <div class="testimonial-user-area">
                                 <div class="user-area">
-                                    <img src="{{ asset('frontend/images/default-avatar.png') }}"
+                                    <img src="{{ Avatar::create($review->name)->toBase64() }}"
                                         alt="{{ $review->name }} - Review LevelUp Gaming Market">
+
                                 </div>
                                 <div class="title-area">
                                     <h5>{{ $review->name }}</h5>
