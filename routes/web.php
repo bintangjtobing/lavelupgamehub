@@ -13,7 +13,8 @@ Route::get('/', function () {
 });
 
 Route::get('/about', function () {
-    return view('pages.about');
+    $reviews = Review::where('agree_terms', true)->orderBy('created_at', 'DESC')->get();
+    return view('pages.about',compact('reviews'));
 });
 
 Route::get('/contact', function () {
@@ -33,3 +34,29 @@ Route::get('/faq', function () {
 Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
 Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
 Route::view('/terms-and-conditions', 'pages.terms-condition')->name('terms-and-conditions');
+
+use Illuminate\Support\Facades\Mail;
+
+Route::post('/message', function (Illuminate\Http\Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email',
+        'message' => 'required|string',
+    ]);
+
+    $details = [
+        'title' => 'Pesan dari Contact Form',
+        'name' => $request->name,
+        'email' => $request->email,
+        'message' => $request->message,
+    ];
+
+    Mail::send([], [], function ($message) use ($details) {
+        $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
+                ->to('levelupmarketgaming@gmail.com')
+                ->subject($details['title'])
+                ->setBody("Nama: {$details['name']}\nEmail: {$details['email']}\nPesan: {$details['message']}", 'text/plain');
+    });
+
+    return back()->with('success', 'Pesan berhasil dikirim!');
+});
