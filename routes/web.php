@@ -5,6 +5,7 @@ use App\Models\Game;
 use App\Models\Voucher;
 use App\Models\Review;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\GameController;
 
 Route::get('/', function () {
     $games = Game::orderBy('created_at', direction: 'DESC')->limit('18')->get();
@@ -60,3 +61,6 @@ Route::post('/message', function (Illuminate\Http\Request $request) {
 
     return back()->with('success', 'Pesan berhasil dikirim!');
 });
+
+
+Route::get('/games/search', [GameController::class, 'search'])->name('games.search');

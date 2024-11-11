@@ -151,7 +151,7 @@
                         </div>
                         <div class="header-search">
                             <div class="header-search-area">
-                                <input type="search" class="top-up-search" placeholder="Cari game kesukaan kamu">
+                                <input type="search" class="top-up-search" id="game-search" placeholder="Cari game kesukaan kamu">
                                 <span><i class="las la-search"></i></span>
                             </div>
                             <div class="header-mobile-search-area">
@@ -163,9 +163,7 @@
                                     <span><i class="las la-search"></i></span>
                                 </div>
                             </div>
-                            <ul class="header-search-result">
-
-                            </ul>
+                            <ul class="header-search-result" id="search-results"></ul>
                         </div>
                     </div>
                 </div>
@@ -376,6 +374,44 @@
         });
     </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#game-search').on('input', function() {
+            let query = $(this).val();
+
+            if (query.length > 0) {
+                $.ajax({
+                    url: "{{ route('games.search') }}",
+                    type: 'GET',
+                    data: { q: query },
+                    success: function(response) {
+                        $('#search-results').empty(); // Clear previous results
+
+                        if (response.length > 0) {
+                            $.each(response, function(index, game) {
+                                $('#search-results').append(`
+                                    <li style="display: flex; align-items: center; gap: 10px;">
+                                        <img src="${game.image_url}" alt="${game.name}" style="width: 40px; height: 40px; border-radius: 15%;">
+                                        <a href=${game.game_url} >${game.name}</a>
+                                    </li>
+                                `);
+                            });
+                        } else {
+                            $('#search-results').append('<li>No games found.</li>');
+                        }
+                    },
+                    error: function() {
+                        $('#search-results').empty();
+                        $('#search-results').append('<li>Something went wrong. Please try again.</li>');
+                    }
+                });
+            } else {
+                $('#search-results').empty(); // Clear results if input is empty
+            }
+        });
+    });
+</script>
 </body>
 
 </html>
