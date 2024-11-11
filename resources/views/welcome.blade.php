@@ -151,7 +151,8 @@
                         </div>
                         <div class="header-search">
                             <div class="header-search-area">
-                                <input type="search" class="top-up-search" id="game-search" placeholder="Cari game kesukaan kamu">
+                                <input type="search" class="top-up-search" id="game-search"
+                                    placeholder="Cari game kesukaan kamu">
                                 <span><i class="las la-search"></i></span>
                             </div>
                             <div class="header-mobile-search-area">
@@ -159,7 +160,7 @@
                                     <i class="las la-search"></i>
                                 </a>
                                 <div class="header-mobile-search-form-area">
-                                    <input type="search" placeholder="Cari game kesukaan kamu">
+                                    <input type="search" placeholder="Cari game kesukaan kamu" id="game-search">
                                     <span><i class="las la-search"></i></span>
                                 </div>
                             </div>
@@ -374,9 +375,9 @@
         });
     </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
         $('#game-search').on('input', function() {
             let query = $(this).val();
 
@@ -411,7 +412,7 @@
             }
         });
     });
-</script>
+    </script>
 </body>
 
 </html>
