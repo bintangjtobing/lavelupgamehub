@@ -160,7 +160,7 @@
                                     <i class="las la-search"></i>
                                 </a>
                                 <div class="header-mobile-search-form-area">
-                                    <input type="search" placeholder="Cari game kesukaan kamu" id="game-search">
+                                    <input type="search" placeholder="Cari game kesukaan kamu" id="game-search-mobile">
                                     <span><i class="las la-search"></i></span>
                                 </div>
                             </div>
@@ -376,42 +376,50 @@
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    {{-- For Live Search --}}
+
     <script>
         $(document).ready(function() {
-        $('#game-search').on('input', function() {
-            let query = $(this).val();
+            // Function to handle live search
+            function liveSearch(query) {
+                if (query.length > 0) {
+                    $.ajax({
+                        url: "{{ route('games.search') }}",
+                        type: 'GET',
+                        data: { q: query },
+                        success: function(response) {
+                            $('#search-results').empty(); // Clear previous results
 
-            if (query.length > 0) {
-                $.ajax({
-                    url: "{{ route('games.search') }}",
-                    type: 'GET',
-                    data: { q: query },
-                    success: function(response) {
-                        $('#search-results').empty(); // Clear previous results
-
-                        if (response.length > 0) {
-                            $.each(response, function(index, game) {
-                                $('#search-results').append(`
-                                    <li style="display: flex; align-items: center; gap: 10px;">
-                                        <img src="${game.image_url}" alt="${game.name}" style="width: 40px; height: 40px; border-radius: 15%;">
-                                        <a href=${game.game_url} >${game.name}</a>
-                                    </li>
-                                `);
-                            });
-                        } else {
-                            $('#search-results').append('<li>No games found.</li>');
+                            if (response.length > 0) {
+                                $.each(response, function(index, game) {
+                                    $('#search-results').append(`
+                                        <li style="display: flex; align-items: center; gap: 10px;">
+                                            <img src="${game.image_url}" alt="${game.name}" style="width: 40px; height: 40px; border-radius: 20%;">
+                                            <a href="${game.game_url}" target="_blank">${game.name}</a>
+                                        </li>
+                                    `);
+                                });
+                            } else {
+                                $('#search-results').append('<li>No games found.</li>');
+                            }
+                        },
+                        error: function() {
+                            $('#search-results').empty();
+                            $('#search-results').append('<li>Something went wrong. Please try again.</li>');
                         }
-                    },
-                    error: function() {
-                        $('#search-results').empty();
-                        $('#search-results').append('<li>Something went wrong. Please try again.</li>');
-                    }
-                });
-            } else {
-                $('#search-results').empty(); // Clear results if input is empty
+                    });
+                } else {
+                    $('#search-results').empty(); // Clear results if input is empty
+                }
             }
+
+            // Event listeners for both desktop and mobile search inputs
+            $('#game-search, #game-search-mobile').on('input', function() {
+                let query = $(this).val();
+                liveSearch(query);
+            });
         });
-    });
     </script>
 </body>
 
