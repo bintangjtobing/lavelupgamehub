@@ -8,7 +8,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\GameController;
 
 Route::get('/', function () {
-    $games = Game::orderBy('created_at', direction: 'DESC')->limit('18')->get();
+    $games = Game::orderBy('created_at', direction: 'DESC')->limit('36')->get();
     $reviews = Review::where('agree_terms', true)->orderBy('created_at', 'DESC')->get();
     return view('pages.index', compact('games','reviews'));
 });
@@ -23,7 +23,7 @@ Route::get('/contact', function () {
 });
 
 Route::get('/topup', function () {
-    $games = Game::orderBy('created_at', 'DESC')->paginate(24);
+    $games = Game::orderBy('created_at', 'DESC')->paginate(100);
     $vouchers = Voucher::orderBy('created_at', 'DESC')->paginate(24);
     return view('pages.topup', compact('games', 'vouchers'));
 });
