@@ -380,46 +380,72 @@
     {{-- For Live Search --}}
 
     <script>
-        $(document).ready(function() {
-            // Function to handle live search
-            function liveSearch(query) {
-                if (query.length > 0) {
-                    $.ajax({
-                        url: "{{ route('games.search') }}",
-                        type: 'GET',
-                        data: { q: query },
-                        success: function(response) {
-                            $('#search-results').empty(); // Clear previous results
+       // Function to handle live search
+    function liveSearch(query) {
+        if (query.length > 0) {
+            // Fetch API for AJAX call
+            fetch("{{ route('games.search') }}?q=" + encodeURIComponent(query))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const searchResults = document.getElementById('search-results');
+                    searchResults.innerHTML = ''; // Clear previous results
 
-                            if (response.length > 0) {
-                                $.each(response, function(index, game) {
-                                    $('#search-results').append(`
-                                        <li style="display: flex; align-items: center; gap: 10px;">
-                                            <img src="${game.image_url}" alt="${game.name}" style="width: 40px; height: 40px; border-radius: 20%;">
-                                            <a href="${game.game_url}" target="_blank">${game.name}</a>
-                                        </li>
-                                    `);
-                                });
-                            } else {
-                                $('#search-results').append('<li>No games found.</li>');
-                            }
-                        },
-                        error: function() {
-                            $('#search-results').empty();
-                            $('#search-results').append('<li>Something went wrong. Please try again.</li>');
-                        }
-                    });
-                } else {
-                    $('#search-results').empty(); // Clear results if input is empty
-                }
-            }
+                    if (data.length > 0) {
+                        data.forEach(game => {
+                            const listItem = document.createElement('li');
+                            listItem.style.display = 'flex';
+                            listItem.style.alignItems = 'center';
+                            listItem.style.gap = '10px';
 
-            // Event listeners for both desktop and mobile search inputs
-            $('#game-search, #game-search-mobile').on('input', function() {
-                let query = $(this).val();
-                liveSearch(query);
-            });
-        });
+                            const image = document.createElement('img');
+                            image.src = game.image_url;
+                            image.alt = game.name;
+                            image.style.width = '40px';
+                            image.style.height = '40px';
+                            image.style.borderRadius = '20%';
+
+                            const link = document.createElement('a');
+                            link.href = game.game_url;
+                            link.target = '_blank';
+                            link.textContent = game.name;
+
+                            listItem.appendChild(image);
+                            listItem.appendChild(link);
+                            searchResults.appendChild(listItem);
+                        });
+                    } else {
+                        const noResults = document.createElement('li');
+                        noResults.textContent = 'No games found.';
+                        searchResults.appendChild(noResults);
+                    }
+                })
+                .catch(error => {
+                    const searchResults = document.getElementById('search-results');
+                    searchResults.innerHTML = ''; // Clear previous results
+                    const errorMessage = document.createElement('li');
+                    errorMessage.textContent = 'Something went wrong. Please try again.';
+                    searchResults.appendChild(errorMessage);
+                    console.error('Error:', error);
+                });
+        } else {
+            const searchResults = document.getElementById('search-results');
+            searchResults.innerHTML = ''; // Clear results if input is empty
+        }
+    }
+
+    // Attach event listeners for live search
+    document.getElementById('game-search').addEventListener('input', function() {
+        liveSearch(this.value);
+    });
+
+    document.getElementById('game-search-mobile').addEventListener('input', function() {
+        liveSearch(this.value);
+    });
     </script>
 </body>
 
