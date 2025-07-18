@@ -34,15 +34,15 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           # Deploy application files
-          sshpass -p 'c#)rgPMzNC2998@Vb4.M' rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ root@153.92.5.213:/var/www/lavelupgamehub/
+          sshpass -p 'c#)rgPMzNC2998@Vb4.M' rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ root@147.93.30.80:/var/www/lavelupgamehub/
 
           # Update server
-          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@153.92.5.213 'cd /var/www/lavelupgamehub && php artisan migrate --force && php artisan config:clear && php artisan cache:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache'
+          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@147.93.30.80 'cd /var/www/lavelupgamehub && php artisan migrate --force && php artisan config:clear && php artisan cache:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache'
 
       - name: Set Permissions
         if: github.ref == 'refs/heads/main'
         run: |
-          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@153.92.5.213 '
+          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@147.93.30.80 '
             cd /var/www/lavelupgamehub &&
             # Set directory permissions
             find storage/ -type d -exec chmod 775 {} \; &&
