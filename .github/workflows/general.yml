@@ -34,12 +34,26 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           # Deploy application files
-          sshpass -p '${{ secrets.SSH_PASSWORD }}' rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/var/www/lavelupgamehub/
+          sshpass -p 'c#)rgPMzNC2998@Vb4.M' rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ root@153.92.5.213:/var/www/lavelupgamehub/
 
           # Update server
-          sshpass -p '${{ secrets.SSH_PASSWORD }}' ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'cd /var/www/lavelupgamehub && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache'
+          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@153.92.5.213 'cd /var/www/lavelupgamehub && php artisan migrate --force && php artisan config:clear && php artisan cache:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache'
 
       - name: Set Permissions
+        if: github.ref == 'refs/heads/main'
         run: |
-          sshpass -p '${{ secrets.SSH_PASSWORD }}' ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'find /var/www/lavelupgamehub/storage/ -type d -exec chmod 775 {} \;'
-          sshpass -p '${{ secrets.SSH_PASSWORD }}' ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'find /var/www/lavelupgamehub/bootstrap/cache/ -type d -exec chmod 775 {} \;'
+          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@153.92.5.213 '
+            cd /var/www/lavelupgamehub &&
+            # Set directory permissions
+            find storage/ -type d -exec chmod 775 {} \; &&
+            find bootstrap/cache/ -type d -exec chmod 775 {} \; &&
+            # Set file permissions for logs
+            find storage/logs/ -type f -exec chmod 664 {} \; &&
+            # Set ownership to web server user (www-data)
+            chown -R www-data:www-data storage/ &&
+            chown -R www-data:www-data bootstrap/cache/ &&
+            # Create logs directory if it does not exist
+            mkdir -p storage/logs &&
+            chmod 775 storage/logs &&
+            chown www-data:www-data storage/logs
+          '
