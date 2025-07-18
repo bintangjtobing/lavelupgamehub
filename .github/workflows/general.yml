@@ -23,23 +23,23 @@ jobs:
       - name: Install Dependencies
         run: |
           composer install
-          cp .env.production .env
+          if [ -f ".env.production" ]; then
+            cp .env.production .env
+          else
+            cp .env.example .env
+          fi
           php artisan key:generate --ansi
 
       - name: Deploy Laravel Project
         if: github.ref == 'refs/heads/main'
         run: |
           # Deploy application files
-          sshpass -p 'c#)rgPMzNC2998@Vb4.M' rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ root@147.93.30.80:/var/www/lavelupgamehub/
+          sshpass -p '${{ secrets.SSH_PASSWORD }}' rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/var/www/lavelupgamehub/
 
           # Update server
-          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@147.93.30.80 'cd /var/www/lavelupgamehub && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache'
-
-      - name: Create Symlink
-        run: |
-          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@147.93.30.80 'bash -s' < scripts/create_symlink.sh
+          sshpass -p '${{ secrets.SSH_PASSWORD }}' ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'cd /var/www/lavelupgamehub && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache'
 
       - name: Set Permissions
         run: |
-          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@147.93.30.80 'find /var/www/lavelupgamehub/storage/ -type d -exec chmod 775 {} \;'
-          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@147.93.30.80 'find /var/www/lavelupgamehub/bootstrap/cache/ -type d -exec chmod 775 {} \;'
+          sshpass -p '${{ secrets.SSH_PASSWORD }}' ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'find /var/www/lavelupgamehub/storage/ -type d -exec chmod 775 {} \;'
+          sshpass -p '${{ secrets.SSH_PASSWORD }}' ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'find /var/www/lavelupgamehub/bootstrap/cache/ -type d -exec chmod 775 {} \;'
