@@ -30,20 +30,16 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           # Deploy application files
-          sshpass -p 'LibrA21101998' rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ levelupgame@153.92.5.213:/home/levelupgame/repo/levelup/
+          sshpass -p 'c#)rgPMzNC2998@Vb4.M' rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ root@147.93.30.80:/var/www/lavelupgamehub/
 
           # Update server
-          sshpass -p 'LibrA21101998' ssh -o StrictHostKeyChecking=no levelupgame@153.92.5.213 'cd /home/levelupgame/repo/levelup && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache'
+          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@147.93.30.80 'cd /var/www/lavelupgamehub && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache'
 
       - name: Create Symlink
         run: |
-          sshpass -p 'LibrA21101998' ssh -o StrictHostKeyChecking=no levelupgame@153.92.5.213 'bash -s' < scripts/create_symlink.sh
+          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@147.93.30.80 'bash -s' < scripts/create_symlink.sh
 
       - name: Set Permissions
         run: |
-          sshpass -p 'LibrA21101998' ssh -o StrictHostKeyChecking=no levelupgame@153.92.5.213 'find /home/levelupgame/repo/levelup/storage/ -type d -exec chmod 775 {} \;'
-          sshpass -p 'LibrA21101998' ssh -o StrictHostKeyChecking=no levelupgame@153.92.5.213 'find /home/levelupgame/repo/levelup/bootstrap/cache/ -type d -exec chmod 775 {} \;'
-
-          # Set permissions for the public directory if needed
-          sshpass -p 'LibrA21101998' ssh -o StrictHostKeyChecking=no levelupgame@153.92.5.213 'find /home/levelupgame/public_html/ -type d -exec chmod 755 {} \;'
-          sshpass -p 'LibrA21101998' ssh -o StrictHostKeyChecking=no levelupgame@153.92.5.213 'find /home/levelupgame/public_html/ -type f -exec chmod 644 {} \;'
+          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@147.93.30.80 'find /var/www/lavelupgamehub/storage/ -type d -exec chmod 775 {} \;'
+          sshpass -p 'c#)rgPMzNC2998@Vb4.M' ssh -o StrictHostKeyChecking=no root@147.93.30.80 'find /var/www/lavelupgamehub/bootstrap/cache/ -type d -exec chmod 775 {} \;'
