@@ -5,6 +5,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\OrderTrackingController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SaweriaWebhookController;
 use App\Http\Controllers\SeoController;
 use App\Models\Review;
 use Illuminate\Support\Facades\Mail;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [CatalogController::class, 'home']);
 
 Route::get('/about', function () {
-    $reviews = Review::where('agree_terms', true)->orderBy('created_at', 'DESC')->get();
+    $reviews = Review::published()->get();
 
     return view('pages.about', compact('reviews'));
 });
@@ -31,8 +32,13 @@ Route::get('/track-order', [OrderTrackingController::class, 'index'])
 Route::post('/track-order', [OrderTrackingController::class, 'lookup'])
     ->middleware('throttle:order-tracking')->name('orders.lookup');
 
+// Callback pesanan dari Saweria. Dikecualikan dari CSRF di VerifyCsrfToken,
+// keasliannya diperiksa lewat tanda tangan HMAC di controller.
+Route::post('/webhooks/saweria', SaweriaWebhookController::class)
+    ->middleware('throttle:120,1')->name('webhooks.saweria');
+
 Route::get('/faq', function () {
-    $reviews = Review::where('agree_terms', true)->orderBy('created_at', 'DESC')->get();
+    $reviews = Review::published()->get();
 
     return view('pages.faq', compact('reviews'));
 });

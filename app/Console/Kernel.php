@@ -16,6 +16,13 @@ class Kernel extends ConsoleKernel
             ->everyFifteenMinutes()
             ->withoutOverlapping(20)
             ->appendOutputTo(storage_path('logs/saweria-sync.log'));
+
+        // Menuntaskan pesanan yang detailnya belum terambil saat callback tiba,
+        // sekaligus memperbarui status pesanan yang belum selesai.
+        $schedule->command('saweria:sync-orders')
+            ->everyFiveMinutes()
+            ->withoutOverlapping(10)
+            ->appendOutputTo(storage_path('logs/saweria-orders.log'));
     }
 
     /**

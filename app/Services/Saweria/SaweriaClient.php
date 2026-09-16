@@ -177,12 +177,30 @@ class SaweriaClient
      */
     public function trackingOrder(string $id): ?array
     {
-        $response = $this->request()->get("{$this->baseUrl}/game-vouchers/tracking-order/{$id}");
+        $response = $this->request(max(1, (int) config('saweria.detail_timeout', 8)))
+            ->get("{$this->baseUrl}/game-vouchers/tracking-order/".rawurlencode($id));
 
-        if ($response->failed()) {
+        if ($response->status() === 404) {
             return null;
         }
 
-        return $response->json('data');
+        if ($response->failed()) {
+            throw new RuntimeException("Gagal mengambil detail pesanan Saweria (HTTP {$response->status()})");
+        }
+
+        $data = $response->json('data');
+
+        if (! is_array($data)) {
+            throw new RuntimeException('Respons detail pesanan Saweria tidak valid.');
+        }
+
+        // Pastikan Saweria membalas pesanan yang benar-benar diminta, bukan yang lain.
+        $returnedId = $data['id'] ?? null;
+
+        if (! is_string($returnedId) || ! hash_equals(strtolower($id), strtolower(trim($returnedId)))) {
+            throw new RuntimeException('Detail pesanan Saweria tidak cocok dengan id yang diminta.');
+        }
+
+        return $data;
     }
 }

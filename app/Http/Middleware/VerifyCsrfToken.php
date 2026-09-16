@@ -12,6 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        // Callback dari Saweria tidak membawa token CSRF. Keasliannya diperiksa
+        // lewat header Saweria-Callback-Signature di SaweriaWebhookController.
+        'webhooks/saweria',
     ];
 }
