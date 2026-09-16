@@ -1,70 +1,84 @@
-<section class="testimonial-section ptb-120 bg_img" data-background="{{ asset('frontend/images/element/bg1.jpg')}}"
-    style="background-image: url('{{ asset('frontend/images/element/bg1.jpg')}}')">
-    <div class="element-area">
-        <img src="{{asset('frontend/images/element/shadow-2.5ab01ec0.svg')}}" alt=""
-            title="Ornamen latar ulasan LevelUp Market">
-    </div>
+@php
+    // Ulasan dibagi ke tiga kolom bergantian supaya tinggi tiap kolom seimbang.
+    $wallReviews = $reviews->take(36);
+    $columns = [[], [], []];
+    foreach ($wallReviews as $i => $review) {
+        $columns[$i % 3][] = $review;
+    }
+
+    $totalReviews = $reviews->count();
+    $averageRating = $totalReviews ? round($reviews->avg('rating'), 1) : 0;
+    $avatarStack = $reviews->take(4);
+@endphp
+
+<section class="lu-section lu-wall-section" aria-labelledby="ulasan-title">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xl-6">
-                <div class="section-header text-center">
-                    <span class="section-sub-titel"><i class="las la-gamepad"></i> Ulasan Pengguna</span>
-                    <h2 class="section-title"><span class="text--base">Pengalaman yang Dibagikan Pengunjung</span></h2>
-                    <p>Ulasan pengunjung belum diverifikasi terhadap transaksi. Data contoh diberi label demo.</p>
-                </div>
-            </div>
-        </div>
-        <div class="testimonial-slider-wrapper">
-            <div class="testimonial-slider swiper-container-horizontal">
-                <div class="swiper-wrapper">
-                    @forelse($reviews as $review)
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <div class="testimonial-user-area">
-                                <div class="user-area">
-                                    @php($reviewName = $review->name)
-                                    @php($avatar = Avatar::create($reviewName)->toBase64())
-                                    <img alt="Avatar {{ $reviewName }}" title="Ulasan dari {{ $reviewName }}"
-                                        src="{{ $avatar }}">
-
-                                </div>
-                                <div class="title-area">
-                                    <h5>{{ $review->name }}</h5>
-                                    <span class="testimonial-date"><i class="las la-history"></i> {{
-                                        $review->created_at->format('d-m-Y') }}</span>
-                                </div>
-                            </div>
-                            @if (str_ends_with((string) $review->email, '@example.com'))
-                                <span class="lu-review-demo">Contoh ulasan</span>
-                            @endif
-                            <p>{{ $review->message }}</p>
-                            <div class="testimonial-bottom-wrapper">
-                                <ul class="testimonial-icon-list">
-                                    @for ($i = 0; $i < $review->rating; $i++)
-                                        <li><i class="las la-star"></i></li>
-                                        @endfor
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    @empty
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <p>Belum ada ulasan yang dipublikasikan.</p>
-                        </div>
-                    </div>
-                    @endforelse
-                </div>
-                <div class="slider-nav-area">
-                    <div class="slider-prev slider-nav">
-                        <i class="las la-arrow-left"></i>
-                    </div>
-                    <div class="slider-next slider-nav">
-                        <i class="las la-arrow-right"></i>
-                    </div>
-                </div>
-            </div>
+        <div class="section-header text-center">
+            <span class="section-sub-titel"><i class="las la-gamepad"></i> Ulasan Pengguna</span>
+            <h2 class="section-title" id="ulasan-title">
+                <span class="text--base">Pengalaman yang Dibagikan Pengunjung</span>
+            </h2>
         </div>
 
+        @if ($totalReviews)
+            <div class="lu-wall-summary">
+                <div class="lu-wall-avatars" aria-hidden="true">
+                    @foreach ($avatarStack as $person)
+                        @include('frontend.partials.review-avatar', ['name' => $person->name, 'size' => 'sm'])
+                    @endforeach
+                </div>
+                <div class="lu-wall-stars" aria-hidden="true">
+                    @for ($i = 0; $i < 5; $i++)
+                        <i class="las la-star {{ $i < round($averageRating) ? 'is-on' : '' }}"></i>
+                    @endfor
+                </div>
+                <strong class="lu-wall-score">{{ number_format($averageRating, 1, ',', '.') }}/5</strong>
+                <span class="lu-wall-count">dari {{ $totalReviews }} ulasan</span>
+            </div>
+        @endif
+
+        <p class="lu-wall-note">
+            Ulasan pengunjung belum diverifikasi terhadap transaksi. Data contoh diberi label demo.
+        </p>
+
+        @if ($totalReviews)
+            <div class="lu-wall" id="lu-wall">
+                @foreach ($columns as $index => $column)
+                    <div class="lu-wall-col lu-wall-col-{{ $index + 1 }}">
+                        {{-- Isi kolom digandakan agar perulangan animasinya tidak terlihat patah --}}
+                        <div class="lu-wall-track">
+                            @for ($pass = 0; $pass < 2; $pass++)
+                                @foreach ($column as $review)
+                                    <article class="lu-wall-card" @if ($pass === 1) aria-hidden="true" @endif>
+                                        <i class="las la-quote-left lu-wall-quote" aria-hidden="true"></i>
+
+                                        <p class="lu-wall-text">{{ $review->message }}</p>
+
+                                        <div class="lu-wall-person">
+                                            @include('frontend.partials.review-avatar', ['name' => $review->name])
+                                            <div class="lu-wall-meta">
+                                                <span class="lu-wall-name">{{ $review->name }}</span>
+                                                <span class="lu-wall-sub">
+                                                    <span class="lu-wall-mini-stars" aria-hidden="true">
+                                                        @for ($i = 0; $i < $review->rating; $i++)★@endfor
+                                                    </span>
+                                                    <span class="sr-only">{{ $review->rating }} dari 5 bintang</span>
+                                                    {{ $review->created_at->translatedFormat('d M Y') }}
+                                                </span>
+                                            </div>
+                                            @if (str_ends_with((string) $review->email, '@example.com'))
+                                                <span class="lu-review-demo">Contoh ulasan</span>
+                                            @endif
+                                        </div>
+                                    </article>
+                                @endforeach
+                            @endfor
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p class="lu-empty">Belum ada ulasan yang dipublikasikan.</p>
+        @endif
     </div>
 </section>
