@@ -20,42 +20,42 @@ return [
     'pages' => [
         '/' => [
             'title' => 'Top Up Game & Voucher Digital | LevelUp Market',
-            'description' => 'Jelajahi katalog top up game, voucher, dan produk digital LevelUp Market lalu lanjutkan pembayaran melalui Saweria.',
+            'description' => 'Temukan top up game, voucher, dan hiburan digital di LevelUp Market. Pilih produk, cek paket serta harga terbaru, lalu checkout melalui Saweria.',
             'label' => 'Beranda',
         ],
         '/topup' => [
             'title' => 'Katalog Top Up Game & Voucher | LevelUp Market',
-            'description' => 'Lihat pilihan top up game, voucher, dan produk digital yang aktif di katalog LevelUp Market.',
+            'description' => 'Cari game atau voucher di katalog LevelUp Market. Filter kategori, lihat produk baru, dan buka pilihan paket beserta harga yang tersedia dari Saweria.',
             'label' => 'Katalog Top Up',
         ],
         '/about' => [
             'title' => 'Tentang LevelUp Market',
-            'description' => 'Kenali LevelUp Market dan layanan katalog top up game, voucher, serta produk digital yang kami tampilkan.',
+            'description' => 'Kenali LevelUp Market, cara kerja katalog produk digital kami, serta alur memilih paket dan melanjutkan pembayaran melalui Saweria.',
             'label' => 'Tentang Kami',
         ],
         '/contact' => [
             'title' => 'Hubungi LevelUp Market',
-            'description' => 'Hubungi tim LevelUp Market untuk pertanyaan tentang katalog, top up game, voucher, dan produk digital.',
+            'description' => 'Butuh bantuan top up atau voucher? Hubungi LevelUp Market melalui WhatsApp, email, atau formulir kontak untuk pertanyaan produk dan kendala pesanan.',
             'label' => 'Kontak',
         ],
         '/track-order' => [
             'title' => 'Lacak Pesanan Top Up & Voucher | LevelUp Market',
-            'description' => 'Masukkan Track ID Saweria untuk memeriksa status pembayaran dan pengiriman top up game atau voucher melalui LevelUp Market.',
+            'description' => 'Lacak pesanan top up dan voucher dengan Track ID Saweria. Periksa status pembayaran, pengiriman, harga produk, dan biaya transaksi di LevelUp Market.',
             'label' => 'Lacak Pesanan',
         ],
         '/faq' => [
             'title' => 'Pertanyaan Umum | LevelUp Market',
-            'description' => 'Temukan jawaban atas pertanyaan umum tentang pembelian top up game, voucher, pembayaran, dan bantuan LevelUp Market.',
+            'description' => 'Pelajari cara top up, memilih paket, mengisi data akun, dan checkout di Saweria. Temukan jawaban tentang harga, pelacakan pesanan, dan bantuan LevelUp Market.',
             'label' => 'Pertanyaan Umum',
         ],
         '/privacy-policy' => [
             'title' => 'Kebijakan Privasi | LevelUp Market',
-            'description' => 'Baca kebijakan privasi LevelUp Market mengenai data yang dikumpulkan, digunakan, dan hak pengguna.',
+            'description' => 'Ketahui bagaimana LevelUp Market menggunakan data formulir, ulasan, cookie, dan analitik, termasuk pilihan pengguna terkait informasi pribadi.',
             'label' => 'Kebijakan Privasi',
         ],
         '/terms-and-conditions' => [
             'title' => 'Syarat dan Ketentuan | LevelUp Market',
-            'description' => 'Baca syarat dan ketentuan penggunaan situs dan layanan LevelUp Market.',
+            'description' => 'Baca ketentuan penggunaan LevelUp Market: informasi katalog dan harga, checkout melalui Saweria, tanggung jawab data akun, serta penanganan kendala.',
             'label' => 'Syarat dan Ketentuan',
         ],
     ],
