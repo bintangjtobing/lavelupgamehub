@@ -9,9 +9,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // Katalog game & produk tidak lagi di-seed manual.
+        // Sumbernya sekarang toko top up Saweria: php artisan saweria:sync
         $this->call([
-            GamesTableSeeder::class,
-            VouchersTableSeeder::class
+            reviewsTableSeeder::class,
         ]);
     }
 }

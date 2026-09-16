@@ -28,6 +28,18 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
+        RateLimiter::for('order-tracking', function (Request $request) {
+            $rawTrackId = $request->input('track_id');
+            $normalizedTrackId = is_string($rawTrackId)
+                ? strtolower(trim($rawTrackId))
+                : 'invalid';
+
+            return [
+                Limit::perMinute(120)->by('order-tracking:ip:'.hash('sha256', (string) $request->ip())),
+                Limit::perMinute(20)->by('order-tracking:id:'.hash('sha256', $normalizedTrackId)),
+            ];
+        });
+
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')

@@ -12,7 +12,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('saweria:sync --prune')
+            ->everyFifteenMinutes()
+            ->withoutOverlapping(20)
+            ->appendOutputTo(storage_path('logs/saweria-sync.log'));
     }
 
     /**

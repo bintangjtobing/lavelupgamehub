@@ -1,55 +1,56 @@
 @extends('welcome')
-@section('title', 'Privacy Policy')
-
-@push('css')
-@endpush
+@section('title', 'Kebijakan Privasi')
 
 @section('content')
-<div class="container py-5">
-    <h1 class="mb-4">Privacy Policy</h1>
-    <p>Effective Date: {{ date('F d, Y') }}</p>
+<main class="container py-5">
+    <h1 class="mb-4">Kebijakan Privasi LevelUp Market</h1>
+    <p>Terakhir diperbarui: 16 September 2026</p>
 
-    <h2>Introduction</h2>
-    <p>At LevelUp Gaming Market, we are committed to protecting your privacy and ensuring that your personal information
-        is handled in a safe and responsible manner. This Privacy Policy explains what personal data we collect, how we
-        use it, and your rights regarding your information.</p>
+    <p>Halaman ini menjelaskan data yang diproses ketika kamu mengunjungi LevelUp Market, mengirim pesan, atau
+        menulis ulasan. Penjelasan ini mengikuti fungsi yang tersedia pada situs saat ini.</p>
 
-    <h2>Information We Collect</h2>
-    <ul>
-        <li><strong>Personal Identification Information:</strong> Name, email address, phone number, etc., collected
-            when you create an account or make a purchase.</li>
-        <li><strong>Transaction Data:</strong> Details about purchases you make on our platform.</li>
-        <li><strong>Usage Data:</strong> Information on how you interact with our website, including IP address, browser
-            type, and pages visited.</li>
-    </ul>
+    <h2>Data formulir kontak</h2>
+    <p>Saat menggunakan formulir kontak, situs menerima nama, alamat email, dan isi pesan. Data tersebut digunakan
+        untuk menerima pertanyaan dan memberikan balasan. Hindari mencantumkan kata sandi, kode verifikasi, atau data
+        pembayaran di dalam pesan.</p>
 
-    <h2>How We Use Your Information</h2>
-    <p>We use your information to:</p>
-    <ul>
-        <li>Process your orders and deliver purchased products.</li>
-        <li>Provide customer support and respond to inquiries.</li>
-        <li>Improve our website and services.</li>
-        <li>Send you promotional information, if you have opted-in to receive it.</li>
-    </ul>
+    <h2>Data ulasan</h2>
+    <p>Formulir ulasan meminta nama, nomor telepon, isi ulasan, persetujuan publikasi, dan alamat email yang bersifat
+        opsional. Ulasan yang memiliki persetujuan dapat menampilkan nama, isi ulasan, tanggal, dan rating yang tersedia
+        secara publik di situs. Alamat email dan nomor telepon tidak ditampilkan dalam kartu ulasan publik.</p>
 
-    <h2>Sharing Your Information</h2>
-    <p>We may share your data with:</p>
-    <ul>
-        <li>Service providers who assist with our business operations.</li>
-        <li>Law enforcement if required by law or to protect our rights.</li>
-    </ul>
+    <h2>Cookie sesi</h2>
+    <p>Situs menggunakan cookie yang diperlukan untuk menjaga sesi, keamanan formulir, dan fungsi
+        dasar halaman. Pengaturan peramban dapat digunakan untuk menghapus atau membatasi cookie, tetapi sebagian fitur
+        formulir mungkin tidak bekerja sebagaimana mestinya.</p>
 
-    <h2>Your Rights</h2>
-    <p>You have the right to access, update, or delete your personal information. Please contact us if you wish to
-        exercise these rights.</p>
+    <h2>Pengukuran penggunaan situs</h2>
+    <p>LevelUp menggunakan Google Analytics 4 untuk memahami penggunaan halaman dan interaksi umum di situs.
+        Konfigurasi analitik situs tidak dimaksudkan untuk mengirim User ID game, nama, email, nomor telepon, atau isi
+        pesan dari formulir kontak dan ulasan sebagai parameter peristiwa khusus. Google dapat memproses data teknis
+        sesuai dengan teknologi dan pengaturan layanan analitiknya.</p>
 
-    <h2>Changes to This Privacy Policy</h2>
-    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy
-        Policy on this page.</p>
+    <p>Situs juga dapat memuat Meta Pixel untuk pengukuran kunjungan dan Microsoft Clarity untuk memahami
+        penggunaan antarmuka. Layanan pihak ketiga ini dapat menggunakan cookie atau memproses data teknis sesuai
+        konfigurasi pengelola dan pengaturan privasi masing-masing layanan. Pengukuran dinonaktifkan pada host pengembangan lokal.</p>
 
-    <h2>Contact Us</h2>
-    <p>If you have any questions about this Privacy Policy, please contact us at support@levelupgamingmarket.com.</p>
-</div>
+    <h2>Katalog dan checkout Saweria</h2>
+    <p>LevelUp menampilkan katalog dan detail produk. Ketika kamu memilih untuk melanjutkan checkout, peramban membuka
+        situs Saweria yang terpisah. Data yang kamu masukkan dan pembayaran yang kamu lakukan di Saweria diproses pada
+        layanan tersebut dan tunduk pada informasi privasi yang disediakan oleh Saweria.</p>
+
+    <h2>Penyimpanan dan akses data</h2>
+    <p>Data formulir tersedia bagi pengelola situs sesuai kebutuhan untuk menangani pesan dan mengelola ulasan. Lama
+        penyimpanan dapat mengikuti kebutuhan operasional situs dan konfigurasi layanan yang digunakan.</p>
+
+    <h2>Pertanyaan mengenai data</h2>
+    <p>Untuk menanyakan data yang pernah kamu kirim melalui situs, gunakan <a href="/contact"
+            title="Hubungi LevelUp Market mengenai privasi">halaman kontak</a> atau kirim email ke <a
+            href="mailto:help@levelupgamehub.com" title="Kirim email privasi ke LevelUp Market">help@levelupgamehub.com</a>.
+        Sertakan informasi yang cukup agar pesan atau ulasan dapat ditemukan tanpa mengirim data sensitif tambahan.</p>
+
+    <h2>Perubahan halaman ini</h2>
+    <p>Isi kebijakan dapat diperbarui ketika fungsi situs atau layanan yang digunakan berubah. Tanggal pembaruan di
+        bagian atas menunjukkan versi penjelasan yang sedang ditampilkan.</p>
+</main>
 @endsection
-@push('script')
-@endpush

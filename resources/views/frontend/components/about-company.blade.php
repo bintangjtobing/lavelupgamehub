@@ -5,25 +5,24 @@
                 <div class="about-content-wrapper">
                     <div class="about-content-area">
                         <div class="section-header">
-                            <span class="section-sub-titel"><i class="las la-gamepad"></i> Fitur Kami</span>
-                            <h2 class="section-title"><span class="text--base">Pilihan Terbaik untuk Gamer dan Pengusaha
-                                    Game</span></h2>
-                            <p>Rasakan era baru dalam dunia game dengan platform yang mudah digunakan dan fitur
-                                unggulan yang dirancang khusus untuk para gamer dan pengusaha game. Bergabunglah dengan
-                                LevelUp Gaming Market dan nikmati kemudahan dalam top-up, isi ulang, serta terhubung
-                                dengan komunitas game di seluruh dunia.</p>
+                            <span class="section-sub-titel"><i class="las la-gamepad"></i> Cara Kerja LevelUp</span>
+                            <h2 class="section-title"><span class="text--base">Katalog Digital yang Mudah
+                                    Dijelajahi</span></h2>
+                            <p>LevelUp Market menyusun produk top up game, voucher, dan hiburan digital agar
+                                lebih mudah dicari. Halaman detail menampilkan paket yang tersedia sebelum kamu
+                                melanjutkan pengisian data dan pembayaran melalui Saweria.</p>
                         </div>
                     </div>
                     <div class="about-feature-area">
                         <ul class="feature-list">
-                            <li>Top-Up Game Cepat dan Mudah</li>
-                            <li>Beragam Pilihan Gift Card</li>
-                            <li>Mendukung Berbagai Mata Uang</li>
-                            <li>Layanan Pelanggan 24/7</li>
-                            <li>Transaksi Aman dan Terpercaya</li>
-                            <li>Antarmuka yang Mudah Digunakan</li>
-                            <li>Kompatibel di Semua Perangkat</li>
-                            <li>Opsi Pembayaran Beragam</li>
+                            <li>Pencarian berdasarkan nama produk</li>
+                            <li>Filter game, voucher, dan hiburan</li>
+                            <li>Paket dan harga dari katalog aktif</li>
+                            <li>Petunjuk data untuk setiap produk</li>
+                            <li>Checkout melalui Saweria</li>
+                            <li>Dapat diakses melalui peramban web</li>
+                            <li>Formulir kontak untuk pertanyaan</li>
+                            <li>Ulasan yang diterbitkan dengan persetujuan</li>
                         </ul>
                     </div>
                     <div class="feature-statistics-wrapper">
@@ -32,10 +31,9 @@
                                 <div class="statistics-item">
                                     <div class="statistics-content">
                                         <div class="odo-area">
-                                            <h3 class="odo-title odometer" data-odometer-final="2024">0</h3>
-                                            <h3 class="title"></h3>
+                                            <h3 class="odo-title">1</h3>
                                         </div>
-                                        <p>Total Pengguna</p>
+                                        <p>Cari produk</p>
                                     </div>
                                 </div>
                             </div>
@@ -43,10 +41,9 @@
                                 <div class="statistics-item">
                                     <div class="statistics-content">
                                         <div class="odo-area">
-                                            <h3 class="odo-title odometer" data-odometer-final="1000">0</h3>
-                                            <h3 class="title"></h3>
+                                            <h3 class="odo-title">2</h3>
                                         </div>
-                                        <p>Total Transaksi</p>
+                                        <p>Pilih paket</p>
                                     </div>
                                 </div>
                             </div>
@@ -54,10 +51,9 @@
                                 <div class="statistics-item">
                                     <div class="statistics-content">
                                         <div class="odo-area">
-                                            <h3 class="odo-title odometer" data-odometer-final="800">0</h3>
-                                            <h3 class="title"></h3>
+                                            <h3 class="odo-title">3</h3>
                                         </div>
-                                        <p>Negara Tersedia</p>
+                                        <p>Lanjut ke Saweria</p>
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +64,8 @@
             <div class="col-xl-6 col-lg-6 col-md-12 mb-30">
                 <div class="about-thumb text-md-center">
                     <img src="https://res.cloudinary.com/boxityapp/image/upload/v1730813761/levelupgaming/donation/huerkerha8mkzik2mwdf.png"
-                        alt="Tentang LevelUp Gaming Market - Fitur dan Layanan Unggulan">
+                        width="1600" height="1600" loading="lazy" decoding="async" alt="Ilustrasi penjelajahan katalog digital LevelUp Market"
+                        title="Katalog digital LevelUp Market">
                 </div>
             </div>
         </div>

@@ -1,0 +1,26 @@
+{
+  "id": "/",
+  "name": "LevelUp Market",
+  "short_name": "LevelUp",
+  "description": "Top up game dan voucher digital melalui Saweria.",
+  "lang": "id",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#242b36",
+  "theme_color": "#242b36",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

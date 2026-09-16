@@ -6,8 +6,8 @@
             <div class="col-xl-6 col-lg-8">
                 <div class="section-header text-center">
                     <span class="section-sub-titel"><i class="las la-shopping-bag text-white"></i>
-                        Mengapa Memilih LevelUp Gaming Market</span>
-                    <h2 class="section-title"> Pilihan Terbaik untuk Kebutuhan Gaming Anda</h2>
+                        Informasi Sebelum Top Up</span>
+                    <h2 class="section-title">Belanja dengan Pilihan yang Lebih Jelas</h2>
                 </div>
             </div>
         </div>
@@ -21,9 +21,9 @@
                             </div>
                         </div>
                         <div class="feature-content">
-                            <h4 class="title">Layanan Gaming yang Lengkap</h4>
-                            <p>LevelUp Gaming Market menyediakan berbagai layanan seperti top-up instan, voucher game,
-                                dan mata uang digital, memastikan Anda selalu siap bermain.</p>
+                            <h3 class="title">Katalog dalam Satu Tempat</h3>
+                            <p>Telusuri game, voucher, dan produk hiburan digital melalui pencarian dan filter
+                                kategori.</p>
                         </div>
                     </div>
                 </div>
@@ -35,9 +35,9 @@
                             </div>
                         </div>
                         <div class="feature-content">
-                            <h4 class="title">Transaksi Aman dan Terpercaya</h4>
-                            <p>Kami menjamin keamanan transaksi dengan sistem pembayaran yang terpercaya, memberikan
-                                pengalaman yang aman dan nyaman setiap saat.</p>
+                            <h3 class="title">Harga Terlihat Sebelum Checkout</h3>
+                            <p>Lihat pilihan paket dan harga yang tersedia, lalu tentukan produk yang sesuai sebelum
+                                berpindah ke halaman Saweria.</p>
                         </div>
                     </div>
                 </div>
@@ -49,9 +49,9 @@
                             </div>
                         </div>
                         <div class="feature-content">
-                            <h4 class="title">Jangkauan Global, Kenyamanan Lokal</h4>
-                            <p>Dengan dukungan berbagai mata uang dan akses global, LevelUp Gaming Market menghubungkan
-                                gamer di seluruh dunia dengan kemudahan lokal.</p>
+                            <h3 class="title">Petunjuk Sesuai Produk</h3>
+                            <p>Halaman produk menjelaskan data akun yang perlu disiapkan apabila informasi tersebut
+                                tersedia di katalog.</p>
                         </div>
                     </div>
                 </div>
@@ -63,9 +63,9 @@
                             </div>
                         </div>
                         <div class="feature-content">
-                            <h4 class="title">Pengalaman Pengguna yang Optimal</h4>
-                            <p>Platform kami dirancang khusus untuk kenyamanan pengguna, menyediakan antarmuka yang
-                                mudah dan cepat untuk memenuhi semua kebutuhan gaming Anda.</p>
+                            <h3 class="title">Bantuan Saat Dibutuhkan</h3>
+                            <p>Gunakan halaman kontak atau WhatsApp LevelUp jika kamu memiliki pertanyaan tentang cara
+                                menggunakan katalog.</p>
                         </div>
                     </div>
                 </div>

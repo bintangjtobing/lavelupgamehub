@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Review;
+use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
@@ -24,10 +24,11 @@ class ReviewController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'message' => $request->message,
-            'agree_terms' => TRUE,
+            'agree_terms' => true,
         ]);
 
         // Redirect back with a success message
-        return redirect()->back()->with('success', 'Terima kasih atas review Anda!');
+        return redirect()->back()->with('success', 'Terima kasih atas review Anda!')
+            ->with('analytics_event', 'review_submit');
     }
 }

@@ -1,0 +1,36 @@
+.lu-tracking { max-width: 1080px; padding-top: 52px; padding-bottom: 64px; }
+.lu-tracking-intro { max-width: 760px; margin-bottom: 30px; }
+.lu-tracking h1 { font-size: clamp(26px, 4vw, 38px); line-height: 1.3; margin-bottom: 14px; }
+.lu-tracking h2 { font-size: 22px; margin-bottom: 18px; }
+.lu-tracking p { line-height: 1.8; }
+.lu-tracking-eyebrow { color: var(--lu-accent); font-size: 12px; letter-spacing: .06em; margin-bottom: 10px; }
+.lu-tracking-panel { background: var(--lu-card-bg); border: 1px solid var(--lu-border); border-radius: 16px; padding: 28px; margin-bottom: 24px; min-width: 0; }
+.lu-tracking-input-row { display: flex; gap: 12px; }
+.lu-tracking label { display: block; font-size: 13px; margin-bottom: 10px; }
+.lu-tracking-input-row input { min-width: 0; flex: 1; border: 1px solid #586376; border-radius: 8px; background: #171d27; color: #fff; padding: 14px; font-family: monospace; font-size: 15px; }
+.lu-tracking-input-row button { border: 0; border-radius: 8px; padding: 14px 22px; color: #18200e; background: var(--lu-accent); font-weight: 700; }
+.lu-tracking input:focus-visible, .lu-tracking button:focus-visible, .lu-tracking a:focus-visible { outline: 3px solid var(--lu-accent); outline-offset: 3px; }
+.lu-tracking-muted { color: #b5bdca; font-size: 12px; margin: 14px 0 0; }
+.lu-tracking-error { border-left: 3px solid #fb7185; padding: 12px 16px; background: #fb718510; color: #fda4af; margin: 16px 0 0; }
+.lu-tracking-steps { display: flex; justify-content: space-between; gap: 16px; padding: 24px 0; margin: 0; }
+.lu-tracking-steps li { flex: 1; display: flex; align-items: center; gap: 10px; color: #b5bdca; border-bottom: 3px solid #46505f; padding-bottom: 18px; font-size: 14px; }
+.lu-tracking-steps span { display: grid; place-items: center; width: 30px; height: 30px; flex-shrink: 0; background: #3a4351; border-radius: 50%; }
+.lu-tracking-steps .is-done { color: var(--lu-accent); border-color: var(--lu-accent); }
+.lu-tracking-steps .is-done span { color: #18200e; background: var(--lu-accent); }
+.lu-tracking-id { display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px; margin: 0; }
+.lu-tracking-id code { color: #d4dbe5; overflow-wrap: anywhere; }
+.lu-tracking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.lu-tracking-product { display: flex; gap: 16px; align-items: center; margin-bottom: 22px; }
+.lu-tracking-product img { border-radius: 12px; width: 88px; height: 88px; object-fit: cover; }
+.lu-tracking-product h3 { font-size: 17px; line-height: 1.5; margin-bottom: 6px; }
+.lu-tracking-product p { font-size: 12px; color: #b5bdca; margin: 0; }
+.lu-tracking-details { margin: 0; }
+.lu-tracking-details > div { display: flex; justify-content: space-between; gap: 18px; margin-bottom: 18px; font-size: 12px; }
+.lu-tracking-details dt { color: #b5bdca; font-weight: 400; flex-shrink: 0; }
+.lu-tracking-details dd { text-align: right; margin: 0; overflow-wrap: anywhere; }
+.lu-tracking-details .lu-tracking-total { padding-top: 20px; border-top: 1px solid #46505f; font-size: 16px; }
+.lu-tracking-total dt, .lu-tracking-total dd { color: var(--lu-accent); font-weight: 700; }
+.lu-tracking-help { max-width: 740px; margin-top: 32px; }
+.lu-tracking-help p { font-size: 13px; color: #b5bdca; }
+.lu-tracking-help a { color: var(--lu-accent); }
+@media (max-width: 767px) { .lu-tracking-grid { grid-template-columns: minmax(0, 1fr); gap: 0; } .lu-tracking-panel { padding: 20px; } .lu-tracking-input-row { flex-direction: column; } .lu-tracking-steps { gap: 10px; } .lu-tracking-steps li { flex-direction: column; align-items: flex-start; font-size: 12px; } }

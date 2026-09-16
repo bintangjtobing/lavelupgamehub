@@ -1,53 +1,36 @@
 @extends('welcome')
-@section('title', 'Contact us')
-
-@push('css')
-@endpush
+@section('title', 'Hubungi LevelUp Market')
 
 @section('content')
-<section class="contact-section ptb-120">
+<section class="contact-section ptb-120" aria-labelledby="contact-title">
     <div class="container">
         <div class="row justify-content-center mb-30-none">
             <div class="col-xl-5 col-lg-5 mb-30">
                 <div class="contact-widget">
                     <div class="contact-form-header">
-                        <h2 class="title">Hubungi Kami</h2>
-                        <p>Punya pertanyaan atau butuh bantuan untuk meningkatkan pengalamanmu? Kirim pesan melalui form
-                            di bawah, dan tim kami akan segera menghubungimu!</p>
+                        <h1 class="title" id="contact-title">Hubungi LevelUp Market</h1>
+                        <p>Butuh bantuan menggunakan katalog atau ingin menanyakan produk? Kirim pesan melalui
+                            formulir, email, atau WhatsApp. Sertakan nama produk dan jelaskan kendalanya agar pertanyaan
+                            lebih mudah dipahami.</p>
                     </div>
                     <ul class="contact-item-list">
                         <li>
-                            <a href="#0">
-                                <div class="contact-item-icon">
-                                    <i class="las la-map-marked-alt"></i>
-                                </div>
+                            <a href="https://wa.me/6285195922910" title="Hubungi LevelUp Market melalui WhatsApp"
+                                rel="noopener noreferrer">
+                                <div class="contact-item-icon"><i class="lab la-whatsapp" aria-hidden="true"></i></div>
                                 <div class="contact-item-content">
-                                    <h5 class="title">Lokasi Kami</h5>
-                                    <span class="sub-title">Jl. Taman Palem Lestari Blk. C15 No.37-38, RT.9/RW.13,
-                                        Pegadungan, Kec. Kalideres, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta
-                                        11830</span>
+                                    <h2 class="title">WhatsApp</h2>
+                                    <span class="sub-title">+62 851-9592-2910</span>
                                 </div>
                             </a>
                         </li>
                         <li>
-                            <a href="#0">
-                                <div class="contact-item-icon tow">
-                                    <i class="las la-phone-volume"></i>
-                                </div>
+                            <a href="mailto:help@levelupgamehub.com"
+                                title="Kirim email ke bantuan LevelUp Market">
+                                <div class="contact-item-icon three"><i class="las la-envelope" aria-hidden="true"></i></div>
                                 <div class="contact-item-content">
-                                    <h5 class="title">Telepon kami</h5>
-                                    <span class="sub-title">Jam kerja kami adalah Senin – Jumat, 9 pagi - 6 sore</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#0">
-                                <div class="contact-item-icon three">
-                                    <i class="las la-envelope"></i>
-                                </div>
-                                <div class="contact-item-content">
-                                    <h5 class="title">Email langsung</h5>
-                                    <span class="sub-title">cs@levelupgamehub.com</span>
+                                    <h2 class="title">Email</h2>
+                                    <span class="sub-title">help@levelupgamehub.com</span>
                                 </div>
                             </a>
                         </li>
@@ -57,24 +40,30 @@
             <div class="col-xl-7 col-lg-7 mb-30">
                 <div class="contact-form-inner wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">
                     <div class="contact-form-area">
+                        <h2>Kirim Pesan</h2>
+                        <p>Data yang diisi di sini digunakan untuk menerima dan menjawab pertanyaanmu.</p>
                         <form class="contact-form" method="POST" action="/message">
                             @csrf
                             <div class="row justify-content-center mb-10-none">
                                 <div class="col-lg-12 form-group">
-                                    <label>Nama Anda <span class="text--base">*</span></label>
-                                    <input type="text" name="name" class="form--control" placeholder="Masukkan nama">
+                                    <label for="contact-name">Nama <span class="text--base">*</span></label>
+                                    <input id="contact-name" type="text" name="name" class="form--control"
+                                        value="{{ old('name') }}" placeholder="Masukkan nama" required maxlength="255"
+                                        autocomplete="name">
                                 </div>
                                 <div class="col-lg-12 form-group">
-                                    <label>Email Anda <span class="text--base">*</span></label>
-                                    <input type="email" name="email" class="form--control" placeholder="Masukkan email">
+                                    <label for="contact-email">Email <span class="text--base">*</span></label>
+                                    <input id="contact-email" type="email" name="email" class="form--control"
+                                        value="{{ old('email') }}" placeholder="Masukkan email" required autocomplete="email">
                                 </div>
                                 <div class="col-lg-12 form-group">
-                                    <label>Pesan <span class="text--base">*</span></label>
-                                    <textarea class="form--control" name="message" placeholder="Pesan Anda"></textarea>
+                                    <label for="contact-message">Pesan <span class="text--base">*</span></label>
+                                    <textarea id="contact-message" class="form--control" name="message"
+                                        placeholder="Tuliskan pertanyaan atau kendala" required>{{ old('message') }}</textarea>
                                 </div>
                                 <div class="col-lg-12 form-group">
                                     <button type="submit" class="btn--base mt-10 contact-btn">Kirim Pesan <i
-                                            class="las la-angle-right"></i></button>
+                                            class="las la-angle-right" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                         </form>
@@ -85,5 +74,3 @@
     </div>
 </section>
 @endsection
-@push('script')
-@endpush

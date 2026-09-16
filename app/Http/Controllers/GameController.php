@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CatalogItem;
 use Illuminate\Http\Request;
-use App\Models\Game;
 
 class GameController extends Controller
 {
@@ -11,11 +11,18 @@ class GameController extends Controller
     {
         $query = $request->input('q');
 
-        // Fetch games with name, image_url, and game_url based on query
-        $games = $query
-            ? Game::where('name', 'like', '%' . $query . '%')->select('name', 'image_url', 'game_url')->get()
-            : Game::select('name', 'image_url', 'game_url')->get();
+        $items = CatalogItem::active()
+            ->when($query, fn ($builder) => $builder->where('name', 'like', '%'.$query.'%'))
+            ->orderBy('name')
+            ->get(['name', 'slug', 'cover', 'type', 'variant']);
 
-        return response()->json($games);
+        // image_url dan game_url adalah accessor, jadi dirakit di sini
+        return response()->json($items->map(fn ($item) => [
+            'name' => $item->name,
+            'slug' => $item->slug,
+            'image_url' => $item->image_url,
+            'game_url' => $item->game_url,
+            'type' => $item->type,
+        ]));
     }
 }

@@ -16,3 +16,11 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Basis data SQLite untuk pengembangan lokal
+/database/database.sqlite
+
+# Environment secrets and browser captures
+.env.*
+!.env.example
+*.har
