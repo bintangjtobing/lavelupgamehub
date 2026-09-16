@@ -205,7 +205,9 @@
                             <h4 class="widget-title">Tulis Review</h4>
                             <p style="margin-top:0;">Berikan pendapat Anda tentang layanan kami. Kami menghargai setiap
                                 masukan Anda!</p>
-                            <form action="{{ route('review.store') }}" method="post" id="reviewForm">
+                            <form action="{{ route('review.store') }}" method="post" id="reviewForm"
+                                aria-label="Formulir ulasan">
+                                <span id="tulis-ulasan" class="lu-anchor" aria-hidden="true"></span>
                                 @csrf
                                 <ul class="footer-list two" style="list-style-type:none;">
                                     <li>

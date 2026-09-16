@@ -41,8 +41,24 @@ class CatalogController extends Controller
         ];
     }
 
+    /**
+     * Ulasan yang tampil di halaman.
+     *
+     * Data contoh (berdomain @example.com) hanya ikut tampil di lingkungan
+     * pengembangan, tempat data itu memang dibutuhkan untuk menata tampilan.
+     * Di situs yang diakses publik hanya ulasan sungguhan yang ditampilkan,
+     * sehingga tidak ada ulasan karangan yang tampak seperti ulasan pelanggan.
+     */
     protected function reviews()
     {
-        return Review::where('agree_terms', true)->orderBy('created_at', 'DESC')->get();
+        $reviews = Review::where('agree_terms', true)->orderBy('created_at', 'DESC');
+
+        if (! app()->environment('local')) {
+            $reviews->where(function ($query) {
+                $query->whereNull('email')->orWhere('email', 'not like', '%@example.com');
+            });
+        }
+
+        return $reviews->get();
     }
 }

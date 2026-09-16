@@ -37,10 +37,6 @@
             </div>
         @endif
 
-        <p class="lu-wall-note">
-            Ulasan pengunjung belum diverifikasi terhadap transaksi. Data contoh diberi label demo.
-        </p>
-
         @if ($totalReviews)
             <div class="lu-wall" id="lu-wall">
                 @foreach ($columns as $index => $column)
@@ -66,9 +62,6 @@
                                                     {{ $review->created_at->translatedFormat('d M Y') }}
                                                 </span>
                                             </div>
-                                            @if (str_ends_with((string) $review->email, '@example.com'))
-                                                <span class="lu-review-demo">Contoh ulasan</span>
-                                            @endif
                                         </div>
                                     </article>
                                 @endforeach
@@ -78,7 +71,15 @@
                 @endforeach
             </div>
         @else
-            <p class="lu-empty">Belum ada ulasan yang dipublikasikan.</p>
+            <div class="lu-wall-invite">
+                <i class="las la-comment-dots" aria-hidden="true"></i>
+                <h3>Belum ada ulasan</h3>
+                <p>
+                    Sudah pernah top up lewat LevelUp Market? Ceritakan pengalamanmu —
+                    ulasan pertama akan tampil di halaman ini.
+                </p>
+                <a href="{{ url('/#tulis-ulasan') }}" class="lu-more">Tulis Ulasan</a>
+            </div>
         @endif
     </div>
 </section>

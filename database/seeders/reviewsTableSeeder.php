@@ -9,13 +9,17 @@ use Carbon\Carbon;
 /*
  * Data contoh untuk bagian ulasan.
  *
- * Semua baris di sini memakai email @example.com, dan itu bukan kebetulan:
- * testimonial.blade.php membaca akhiran tersebut untuk memasang label
- * "Contoh ulasan". Jadi jangan ganti domainnya, karena labelnya akan hilang
- * dan data contoh ini jadi tampak seperti ulasan pelanggan sungguhan.
+ * Semua baris di sini memakai email @example.com, dan itu bukan kebetulan.
+ * CatalogController membaca akhiran tersebut untuk menyaring: data ini hanya
+ * tampil saat APP_ENV=local, tempat ia dibutuhkan untuk menata tampilan.
+ * Di situs yang diakses publik hanya ulasan sungguhan yang ditampilkan, jadi
+ * tidak ada ulasan karangan yang tampak seperti ulasan pelanggan.
  *
- * Ulasan asli yang masuk lewat form tidak tersentuh: seeder hanya menghapus
- * baris yang berdomain @example.com sebelum mengisi ulang.
+ * Kalau domainnya diganti, penyaring itu lolos dan data karangan ini akan
+ * muncul di situs live sebagai ulasan asli.
+ *
+ * Ulasan sungguhan yang masuk lewat form tidak tersentuh: seeder hanya
+ * menghapus baris berdomain @example.com sebelum mengisi ulang.
  */
 class reviewsTableSeeder extends Seeder
 {

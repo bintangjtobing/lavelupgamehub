@@ -400,15 +400,6 @@
     outline: 3px solid #fff;
     outline-offset: 4px;
 }
-.lu-review-demo {
-    display: inline-block;
-    margin: 0 0 12px;
-    padding: 3px 8px;
-    border: 1px solid rgba(255,255,255,.2);
-    border-radius: 5px;
-    color: #bcc5cf;
-    font: 500 11px/1.5 Poppins, sans-serif;
-}
 .lu-brand-intro { position: relative; isolation: isolate; overflow: hidden; }
 .lu-brand-intro::before {
     content: '';
@@ -630,9 +621,6 @@
     margin-right: 4px;
 }
 
-.lu-wall-person .lu-review-demo {
-    margin-left: auto;
-}
 
 @media (prefers-reduced-motion: reduce) {
     .lu-wall-track { animation: none; }
@@ -659,4 +647,46 @@
     .lu-wall-col-2 { display: none; }
     .lu-wall-summary { gap: 8px; padding: 9px 15px; }
     .lu-wall-count { width: 100%; text-align: center; }
+}
+
+/* Tampilan saat belum ada ulasan sungguhan */
+.lu-wall-invite {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 44px 24px;
+    text-align: center;
+    border: 1px dashed var(--lu-border);
+    border-radius: 16px;
+}
+
+.lu-wall-invite i {
+    font-size: 34px;
+    color: var(--lu-accent);
+    opacity: .8;
+}
+
+.lu-wall-invite h3 {
+    margin: 12px 0 8px;
+    color: #fff;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.lu-wall-invite p {
+    margin: 0 0 20px;
+    color: var(--lu-text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.lu-wall-invite .lu-more {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.lu-anchor {
+    display: block;
+    position: relative;
+    top: -90px;
+    height: 0;
 }
