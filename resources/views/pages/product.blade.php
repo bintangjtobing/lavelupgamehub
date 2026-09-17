@@ -73,6 +73,8 @@
                 @foreach ($faqs as $faq)<details><summary>{{ $faq['question'] }}</summary><p>{{ $faq['answer'] }}</p></details>@endforeach
             </section>
         @endif
+
+        @include('frontend.partials.mlbb-hero-stats')
     </div>
 </main>
 @endsection

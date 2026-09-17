@@ -53,3 +53,191 @@
 @media (max-width: 1199px) { .lu-product-layout { grid-template-columns: minmax(0, 1fr) 290px; } .lu-product-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 991px) { .lu-product-layout { grid-template-columns: minmax(0, 1fr); } .lu-product-sidebar { position: static; } .lu-product-options { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 575px) { .lu-product { padding-top: 28px; } .lu-product-hero { gap: 16px; align-items: flex-start; } .lu-product-hero img { width: 80px; height: 80px; border-radius: 12px; } .lu-product-hero h1 { font-size: 25px; } .lu-product-hero p { font-size: 12px; } .lu-product-panel { padding: 18px; } .lu-product-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } .lu-product-option { padding: 12px 10px; } }
+
+/* ---------------------------------------------------------------
+   Peringkat hero Mobile Legends
+   --------------------------------------------------------------- */
+.lu-hero-stats {
+    margin-top: 32px;
+    padding: 22px;
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 16px;
+    background: #1e2430;
+}
+
+.lu-hero-head h2 {
+    margin: 0 0 4px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.lu-hero-head p {
+    margin: 0 0 18px;
+    font-size: 13px;
+    color: #9aa4b2;
+}
+
+/* Penyaring */
+.lu-hero-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.lu-hero-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.lu-hero-group a {
+    padding: 6px 13px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, .08);
+    color: #9aa4b2;
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all .15s ease;
+}
+
+.lu-hero-group a:hover { color: #fff; border-color: rgba(163, 230, 53, .5); }
+
+.lu-hero-group a.is-on {
+    background: #a3e635;
+    border-color: #a3e635;
+    color: #0d1117;
+}
+
+/* Daftar hero */
+.lu-hero-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    counter-reset: hero;
+}
+
+.lu-hero-row {
+    display: grid;
+    grid-template-columns: 30px 48px minmax(90px, 1fr) minmax(70px, 1.4fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border-radius: 12px;
+    background: #171d27;
+    border: 1px solid rgba(255, 255, 255, .05);
+}
+
+.lu-hero-rank {
+    font-size: 13px;
+    font-weight: 800;
+    color: #6b7686;
+    text-align: center;
+}
+
+.lu-hero-row:nth-child(1) .lu-hero-rank { color: #fbbf24; }
+.lu-hero-row:nth-child(2) .lu-hero-rank { color: #cbd5e1; }
+.lu-hero-row:nth-child(3) .lu-hero-rank { color: #d97706; }
+
+.lu-hero-face {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #11161f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lu-hero-face img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.lu-hero-initial { font-weight: 800; color: #6b7686; }
+
+.lu-hero-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Batang perbandingan */
+.lu-hero-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .06);
+    overflow: hidden;
+}
+
+.lu-hero-bar .fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+}
+
+.lu-metric-win { background: linear-gradient(90deg, #4ade80, #a3e635); }
+.lu-metric-pick { background: linear-gradient(90deg, #38bdf8, #818cf8); }
+.lu-metric-ban { background: linear-gradient(90deg, #fb7185, #f87171); }
+
+/* Angka */
+.lu-hero-figures {
+    display: flex;
+    gap: 14px;
+    text-align: right;
+}
+
+.lu-hero-figures span {
+    display: flex;
+    flex-direction: column;
+    min-width: 54px;
+    opacity: .5;
+}
+
+.lu-hero-figures span.is-active { opacity: 1; }
+.lu-hero-figures b { font-size: 13px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+.lu-hero-figures small { font-size: 10px; color: #9aa4b2; text-transform: uppercase; letter-spacing: .4px; }
+
+.lu-hero-note {
+    margin: 16px 0 0;
+    font-size: 12px;
+    color: #6b7686;
+    line-height: 1.6;
+}
+
+@media (max-width: 767px) {
+    .lu-hero-stats { padding: 16px; }
+
+    .lu-hero-row {
+        grid-template-columns: 24px 40px minmax(0, 1fr);
+        grid-template-areas:
+            "rank face name"
+            "bar  bar  bar"
+            "fig  fig  fig";
+        gap: 8px 10px;
+    }
+
+    .lu-hero-rank { grid-area: rank; }
+    .lu-hero-face { grid-area: face; width: 40px; height: 40px; }
+    .lu-hero-name { grid-area: name; }
+    .lu-hero-bar { grid-area: bar; }
+    .lu-hero-figures { grid-area: fig; justify-content: space-between; text-align: left; gap: 8px; }
+    .lu-hero-figures span { min-width: 0; }
+
+    /* Penyaring digeser menyamping supaya tidak menumpuk */
+    .lu-hero-group {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+    }
+    .lu-hero-group::-webkit-scrollbar { display: none; }
+    .lu-hero-group a { flex: 0 0 auto; }
+}
