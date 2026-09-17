@@ -298,3 +298,9 @@
         border-radius: 999px;
     }
 }
+
+/* Peran champion pada baris berjalan, untuk game tanpa angka rate */
+.lu-strip-item i.role { color: #9aa4b2; font-weight: 600; }
+
+/* Tabel statistik di kolom samping halaman produk */
+.lu-product-sidebar .lu-gs { margin-top: 0; }

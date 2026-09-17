@@ -6,7 +6,7 @@
 @endpush
 
 @push('subheader')
-    @include('frontend.partials.mlbb-hero-ticker')
+    @include('frontend.partials.game-hero-ticker')
 @endpush
 
 @section('content')
@@ -66,7 +66,9 @@
                         </section>
                     @endif
 
-                    @include('frontend.partials.mlbb-hero-stats')
+                    @if (!empty($game))
+                        @include('frontend.partials.game-stats-table', ['game' => $game])
+                    @endif
                 </aside>
             </div>
             <div class="lu-product-mobile-checkout" id="mobile-checkout" hidden>

@@ -690,3 +690,182 @@
     top: -90px;
     height: 0;
 }
+
+/* ---------------------------------------------------------------
+   Tabel statistik hero antar game
+   --------------------------------------------------------------- */
+.lu-gs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 18px;
+}
+
+.lu-gs {
+    display: flex;
+    flex-direction: column;
+    padding: 18px;
+    border: 1px solid var(--lu-border);
+    border-radius: 14px;
+    background: var(--lu-card-bg);
+}
+
+.lu-gs-head h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.lu-gs-head p {
+    margin: 4px 0 14px;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--lu-text-muted);
+}
+
+.lu-gs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.lu-gs-table th {
+    padding: 0 0 7px;
+    text-align: left;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    color: var(--lu-text-muted);
+    border-bottom: 1px solid var(--lu-border);
+}
+
+.lu-gs-table td {
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .04);
+    vertical-align: middle;
+}
+
+.lu-gs-table tr:last-child td { border-bottom: 0; }
+
+.lu-gs-table .c-no {
+    width: 20px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--lu-text-muted);
+}
+
+.lu-gs-table .c-num {
+    text-align: right;
+    padding-left: 6px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.lu-gs-table .c-role {
+    text-align: right;
+    padding-left: 6px;
+    color: var(--lu-text-muted);
+    white-space: nowrap;
+}
+
+.lu-gs-table td.win { color: #4ade80; }
+.lu-gs-table td.pick { color: #38bdf8; }
+.lu-gs-table td.ban { color: #f87171; }
+
+.lu-gs-table .c-hero {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.lu-gs-table .c-hero img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 auto;
+    background: #11161f;
+}
+
+.lu-gs-table .c-hero span {
+    color: #fff;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Kaki kartu: navigasi halaman dan tombol top up */
+.lu-gs-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--lu-border);
+}
+
+.lu-gs-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lu-gs-nav button {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid var(--lu-border);
+    background: transparent;
+    color: var(--lu-text-muted);
+    font: inherit;
+    cursor: pointer;
+    transition: all .15s ease;
+}
+
+.lu-gs-nav button:hover:not(:disabled) {
+    color: #0d1117;
+    background: var(--lu-accent);
+    border-color: var(--lu-accent);
+}
+
+.lu-gs-nav button:disabled { opacity: .3; cursor: default; }
+
+.lu-gs-nav span {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--lu-text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.lu-gs-cta {
+    margin-left: auto;
+    padding: 9px 16px;
+    border-radius: 9px;
+    background: var(--lu-accent);
+    color: #0d1117;
+    font-size: 12.5px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background .15s ease;
+}
+
+.lu-gs-cta:hover { background: #bbf75b; color: #0d1117; }
+
+.lu-gs-source {
+    margin: 10px 0 0;
+    font-size: 10.5px;
+    color: #6b7686;
+}
+
+@media (max-width: 479px) {
+    .lu-gs { padding: 14px; }
+    .lu-gs-foot { flex-direction: column; align-items: stretch; }
+    .lu-gs-nav { justify-content: center; }
+    .lu-gs-cta { margin-left: 0; text-align: center; }
+}

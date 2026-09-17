@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CatalogItem;
 use App\Models\TrackingEvent;
 use App\Services\Analytics\VisitorTracker;
-use App\Services\Mlbb\HeroStatsClient;
+use App\Services\GameStats\GameStatsManager;
 use App\Services\Saweria\ProductDetailMapper;
 use App\Services\Saweria\SaweriaClient;
 use Illuminate\Http\Request;
@@ -50,29 +50,21 @@ class ProductController extends Controller
             $data = $mapper->unavailable($item);
         }
 
-        return view('pages.product', $data + $this->heroStats($item));
+        return view('pages.product', $data + $this->gameStats($item));
     }
 
     /**
-     * Peringkat hero, khusus untuk produk Mobile Legends.
+     * Statistik hero untuk produk yang punya sumbernya.
      *
-     * Statistik ini tambahan, bukan inti halaman. Bila Moonton sedang tidak
-     * bisa dihubungi, nilainya null dan bagian tersebut tidak dirender --
-     * halaman produk beserta daftar harganya tetap tampil utuh.
+     * Bersifat tambahan, bukan inti halaman. Bila sumbernya sedang tidak bisa
+     * dibaca, nilainya null dan bagian tersebut tidak dirender -- daftar harga
+     * pada halaman produk tetap tampil utuh.
      */
-    protected function heroStats(CatalogItem $item): array
+    protected function gameStats(CatalogItem $item): array
     {
-        if ($item->slug !== config('mlbb.slug')) {
-            return ['heroStats' => null, 'heroDays' => null];
-        }
+        $manager = app(GameStatsManager::class);
+        $key = $manager->keyForSlug($item->slug);
 
-        $days = (int) config('mlbb.default_range');
-
-        return [
-            // Moonton sudah mengurutkan menurut win rate, jadi tidak ada
-            // pengurutan ulang di sisi kita.
-            'heroStats' => app(HeroStatsClient::class)->heroes((int) config('mlbb.default_rank'), $days),
-            'heroDays' => $days,
-        ];
+        return ['game' => $key ? $manager->game($key) : null];
     }
 }

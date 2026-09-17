@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CatalogItem;
 use App\Models\Review;
+use App\Services\GameStats\GameStatsManager;
 
 class CatalogController extends Controller
 {
@@ -11,6 +12,9 @@ class CatalogController extends Controller
     {
         return view('pages.index', $this->catalogData() + [
             'reviews' => $this->reviews(),
+            // Game yang sumbernya sedang gagal dibaca tidak ikut, sehingga
+            // section menyesuaikan diri tanpa menampilkan tabel kosong.
+            'gameStats' => app(GameStatsManager::class)->all(),
         ]);
     }
 

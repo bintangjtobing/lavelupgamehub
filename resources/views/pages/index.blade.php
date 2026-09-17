@@ -15,6 +15,8 @@
 
 @include('frontend.partials.catalog-browser')
 
+@include('frontend.partials.game-stats-section')
+
 @include('frontend.components.about-company')
 
 @include('frontend.components.why-choose')
