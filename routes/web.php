@@ -47,7 +47,7 @@ Route::get('/ke-checkout/{slug}', CheckoutRedirectController::class)
     ->middleware('throttle:120,1')->name('checkout.go');
 
 // Panel pengelola
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('noindex')->group(function () {
     Route::get('/masuk', [LoginController::class, 'show'])->middleware('guest')->name('login');
     Route::post('/masuk', [LoginController::class, 'login'])->middleware(['guest', 'throttle:10,1']);
     Route::post('/keluar', [LoginController::class, 'logout'])->middleware('auth')->name('logout');

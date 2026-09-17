@@ -10,11 +10,11 @@
 </head>
 
 <body>
-    <header class="ad-top">
-        <div class="ad-wrap ad-top-inner">
-            <a href="{{ route('admin.dashboard') }}" class="ad-brand">LevelUp <span>Panel</span></a>
+    <header class="lup-top">
+        <div class="lup-wrap lup-top-inner">
+            <a href="{{ route('admin.dashboard') }}" class="lup-brand">LevelUp <span>Panel</span></a>
 
-            <nav class="ad-nav">
+            <nav class="lup-nav">
                 <a href="{{ route('admin.dashboard') }}"
                     class="{{ request()->routeIs('admin.dashboard') ? 'is-on' : '' }}">Analitik</a>
                 <a href="{{ route('admin.orders') }}"
@@ -22,16 +22,16 @@
                 <a href="{{ url('/') }}" target="_blank" rel="noopener">Lihat situs &rarr;</a>
             </nav>
 
-            <form method="post" action="{{ route('admin.logout') }}" class="ad-logout">
+            <form method="post" action="{{ route('admin.logout') }}" class="lup-logout">
                 @csrf
                 <button type="submit">Keluar</button>
             </form>
         </div>
     </header>
 
-    <main class="ad-wrap ad-main">
+    <main class="lup-wrap lup-main">
         @if (session('status'))
-            <div class="ad-flash">{{ session('status') }}</div>
+            <div class="lup-flash">{{ session('status') }}</div>
         @endif
 
         @yield('content')

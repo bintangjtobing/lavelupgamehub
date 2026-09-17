@@ -6,31 +6,31 @@
 @endphp
 
 @section('content')
-    <div class="ad-head">
+    <div class="lup-head">
         <div>
             <h1>{{ $order->product_name ?: 'Pesanan menunggu detail' }}</h1>
             <p>{{ $order->game_name ?: 'Nama produk belum terambil dari Saweria' }}</p>
         </div>
         <div style="display:flex; gap:8px; flex-wrap:wrap">
-            <a href="{{ route('admin.orders') }}" class="ad-btn ghost">&larr; Kembali</a>
+            <a href="{{ route('admin.orders') }}" class="lup-btn ghost">&larr; Kembali</a>
             <form method="post" action="{{ route('admin.orders.refresh', $order->saweria_id) }}">
                 @csrf
-                <button type="submit" class="ad-btn">Segarkan dari Saweria</button>
+                <button type="submit" class="lup-btn">Segarkan dari Saweria</button>
             </form>
         </div>
     </div>
 
-    <div class="ad-grid">
-        <div class="ad-panel">
+    <div class="lup-grid">
+        <div class="lup-panel">
             <h2>Pesanan</h2>
             <p class="hint">Status berasal dari Saweria, bukan dihitung sendiri.</p>
 
-            <dl class="ad-kv">
+            <dl class="lup-kv">
                 <dt>Status</dt>
-                <dd><span class="ad-badge {{ $order->state }}">{{ $order->state_label }}</span></dd>
+                <dd><span class="lup-badge {{ $order->state }}">{{ $order->state_label }}</span></dd>
 
                 <dt>Track ID</dt>
-                <dd class="ad-mono">{{ $order->saweria_id }}</dd>
+                <dd class="lup-mono">{{ $order->saweria_id }}</dd>
 
                 <dt>Pembayaran</dt>
                 <dd>{{ $order->payment_status ?: '-' }} &middot; {{ $order->payment_method ?: '-' }}</dd>
@@ -58,22 +58,22 @@
                     @if ($order->enriched_at)
                         {{ $order->enriched_at->translatedFormat('d M Y, H:i') }}
                     @else
-                        <span class="ad-muted">belum ({{ $order->enrich_attempts }} percobaan)</span>
+                        <span class="lup-muted">belum ({{ $order->enrich_attempts }} percobaan)</span>
                     @endif
                 </dd>
             </dl>
         </div>
 
-        <div class="ad-panel">
+        <div class="lup-panel">
             <h2>Pembeli</h2>
             <p class="hint">Data ini dikirim Saweria bersama callback.</p>
 
-            <dl class="ad-kv">
+            <dl class="lup-kv">
                 <dt>Nama</dt>
                 <dd>{{ $order->donator_name ?: '-' }}</dd>
 
                 <dt>Email</dt>
-                <dd class="ad-mono">{{ $order->donator_email ?: '-' }}</dd>
+                <dd class="lup-mono">{{ $order->donator_email ?: '-' }}</dd>
 
                 <dt>Pesan</dt>
                 <dd>{{ $order->message ?: '-' }}</dd>
@@ -85,7 +85,7 @@
                 dan callback-nya tidak membawa penanda sesi kita.
             </p>
 
-            <dl class="ad-kv">
+            <dl class="lup-kv">
                 <dt>Sumber</dt>
                 <dd>{{ $order->source_label }}</dd>
 
@@ -100,7 +100,7 @@
         </div>
     </div>
 
-    <div class="ad-panel">
+    <div class="lup-panel">
         <h2>Perjalanan pengunjung</h2>
         <p class="hint">
             @if ($journey->isEmpty())
@@ -111,16 +111,16 @@
         </p>
 
         @if ($journey->isNotEmpty())
-            <ul class="ad-journey" style="padding-left:4px; margin:0">
+            <ul class="lup-journey" style="padding-left:4px; margin:0">
                 @foreach ($journey as $event)
                     <li>
                         <strong>{{ $event->label }}</strong>
-                        <span class="ad-muted">&middot; {{ $event->occurred_at->translatedFormat('d M, H:i:s') }}</span>
+                        <span class="lup-muted">&middot; {{ $event->occurred_at->translatedFormat('d M, H:i:s') }}</span>
                         @if ($event->path)
-                            <div class="ad-muted ad-mono">/{{ $event->path }}</div>
+                            <div class="lup-muted lup-mono">/{{ $event->path }}</div>
                         @endif
                         @if ($event->product_slug)
-                            <div class="ad-muted">paket: {{ $event->product_slug }}</div>
+                            <div class="lup-muted">paket: {{ $event->product_slug }}</div>
                         @endif
                     </li>
                 @endforeach

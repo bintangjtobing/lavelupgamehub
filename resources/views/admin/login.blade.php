@@ -10,14 +10,14 @@
 </head>
 
 <body>
-    <div class="ad-login">
+    <div class="lup-login">
         <form method="post" action="{{ route('admin.login') }}">
             @csrf
             <h1>LevelUp Panel</h1>
             <p>Masuk untuk melihat pesanan dan analitik.</p>
 
             @if ($errors->any())
-                <div class="ad-error">{{ $errors->first() }}</div>
+                <div class="lup-error">{{ $errors->first() }}</div>
             @endif
 
             <label for="email">Email</label>
@@ -27,7 +27,7 @@
             <label for="password">Kata sandi</label>
             <input type="password" id="password" name="password" required autocomplete="current-password">
 
-            <button type="submit" class="ad-btn">Masuk</button>
+            <button type="submit" class="lup-btn">Masuk</button>
         </form>
     </div>
 </body>
