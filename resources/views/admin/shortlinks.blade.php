@@ -20,6 +20,15 @@
         <div class="lup-error" style="margin-bottom:18px">{{ $errors->first() }}</div>
     @endif
 
+    {{-- Tautan yang baru dibuat ditaruh paling depan supaya bisa langsung disalin --}}
+    @if (session('created_url'))
+        <div class="lup-flash lup-copy-row" style="margin-bottom:18px">
+            <span>Tautan siap dipakai:</span>
+            <strong class="lup-mono">{{ session('created_url') }}</strong>
+            <button type="button" class="lup-copy" data-copy="{{ session('created_url') }}">Salin</button>
+        </div>
+    @endif
+
     {{-- Pembuat tautan --}}
     <div class="lup-panel" style="margin-bottom:18px">
         <h2>Buat tautan baru</h2>
@@ -118,9 +127,14 @@
                             <tr>
                                 <td>
                                     <strong>{{ $link->template_icon }} {{ $link->label }}</strong>
-                                    <div class="lup-mono">
-                                        <a href="{{ $link->short_url }}" target="_blank" rel="noopener">/s/{{ $link->code }}</a>
+
+                                    <div class="lup-copy-row">
+                                        <a href="{{ $link->short_url }}" target="_blank" rel="noopener"
+                                            class="lup-mono">{{ $link->short_url }}</a>
+                                        <button type="button" class="lup-copy" data-copy="{{ $link->short_url }}"
+                                            title="Salin tautan">Salin</button>
                                     </div>
+
                                     @unless ($link->isUsable())
                                         <span class="lup-badge failed">
                                             {{ $link->hasExpired() ? 'kedaluwarsa' : 'nonaktif' }}
@@ -197,6 +211,60 @@
                             if (field) field.value = values[key] || '';
                         });
                 });
+            });
+
+            /*
+             * Tombol salin.
+             *
+             * navigator.clipboard hanya tersedia pada konteks aman dan bisa
+             * ditolak izinnya, jadi disiapkan cara lama memakai elemen bayangan
+             * agar tombolnya tetap bekerja.
+             */
+            function copyText(text) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    return navigator.clipboard.writeText(text);
+                }
+
+                return new Promise((resolve, reject) => {
+                    const box = document.createElement('textarea');
+                    box.value = text;
+                    box.setAttribute('readonly', '');
+                    box.style.position = 'fixed';
+                    box.style.opacity = '0';
+                    document.body.appendChild(box);
+                    box.select();
+
+                    try {
+                        document.execCommand('copy') ? resolve() : reject();
+                    } catch (err) {
+                        reject(err);
+                    } finally {
+                        box.remove();
+                    }
+                });
+            }
+
+            document.addEventListener('click', function (event) {
+                const button = event.target.closest('[data-copy]');
+                if (!button) return;
+
+                event.preventDefault();
+
+                const original = button.textContent;
+                copyText(button.dataset.copy)
+                    .then(() => {
+                        button.textContent = 'Tersalin';
+                        button.classList.add('is-done');
+                    })
+                    .catch(() => {
+                        button.textContent = 'Gagal';
+                    })
+                    .finally(() => {
+                        setTimeout(() => {
+                            button.textContent = original;
+                            button.classList.remove('is-done');
+                        }, 1600);
+                    });
             });
         })();
     </script>

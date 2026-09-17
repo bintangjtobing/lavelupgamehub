@@ -32,8 +32,10 @@ class ShortLinkController extends Controller
             'code' => $code ?: ShortLink::generateCode(),
         ]);
 
+        // URL dikirim terpisah agar halaman bisa menampilkannya dengan tombol salin,
+        // bukan sekadar teks di dalam kalimat.
         return redirect()->route('admin.shortlinks')
-            ->with('status', 'Tautan pendek dibuat: '.$link->short_url);
+            ->with('created_url', $link->short_url);
     }
 
     public function update(Request $request, ShortLink $shortLink)
