@@ -138,7 +138,10 @@
                 seenBoxes.add(entry.target);
                 emit('view_promotion', promotionOf(entry.target));
             });
-        }, { threshold: 0.4 });
+        // Ambang dibuat longgar: kotaknya tinggi, dan pada guliran cepat
+        // peramban tidak selalu sempat mencatat keadaan saat isinya terlihat
+        // penuh. Seperempat bagian sudah cukup untuk menyatakan terlihat.
+        }, { threshold: 0.25 });
 
         statBoxes.forEach(box => boxObserver.observe(box));
     }
