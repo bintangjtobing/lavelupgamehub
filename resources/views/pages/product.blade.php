@@ -5,6 +5,10 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/product-detail.css') }}">
 @endpush
 
+@push('subheader')
+    @include('frontend.partials.mlbb-hero-ticker')
+@endpush
+
 @section('content')
 <main class="lu-product" data-analytics-product
     data-analytics-item="{{ json_encode(['item_id' => $item->slug, 'item_name' => $item->name, 'item_brand' => $item->publisher, 'item_category' => $item->category_label]) }}">

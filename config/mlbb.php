@@ -45,7 +45,7 @@ return [
     'default_rank' => 101,
 
     // Berapa hero yang ditampilkan
-    'limit' => 20,
+    'limit' => 30,
 
     /*
      * Moonton menyegarkan datanya tiap enam menit. Menyimpan hasilnya lebih

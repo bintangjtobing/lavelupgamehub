@@ -55,124 +55,246 @@
 @media (max-width: 575px) { .lu-product { padding-top: 28px; } .lu-product-hero { gap: 16px; align-items: flex-start; } .lu-product-hero img { width: 80px; height: 80px; border-radius: 12px; } .lu-product-hero h1 { font-size: 25px; } .lu-product-hero p { font-size: 12px; } .lu-product-panel { padding: 18px; } .lu-product-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } .lu-product-option { padding: 12px 10px; } }
 
 /* ---------------------------------------------------------------
-   Ticker peringkat hero Mobile Legends
+   Baris berjalan peringkat hero (selebar layar, di bawah navigasi)
    --------------------------------------------------------------- */
-.lu-ticker {
-    margin-top: 14px;
-    padding: 14px 0 12px;
-    border: 1px solid rgba(255, 255, 255, .08);
-    border-radius: 14px;
-    background: #171d27;
+.lu-strip {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: #11161f;
+    border-bottom: 1px solid rgba(255, 255, 255, .07);
     overflow: hidden;
 }
 
-.lu-ticker-head {
-    padding: 0 14px 10px;
+.lu-strip-tag {
+    flex: 0 0 auto;
+    padding: 9px 16px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #0d1117;
+    background: #a3e635;
+    white-space: nowrap;
 }
 
-.lu-ticker-head h2 {
+/* Isi memudar di tepi kanan, bukan terpotong mendadak */
+.lu-strip-window {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, #000 92%, transparent);
+    mask-image: linear-gradient(to right, #000 92%, transparent);
+}
+
+.lu-strip-track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    animation: lu-strip-run 70s linear infinite;
+    will-change: transform;
+}
+
+.lu-strip:hover .lu-strip-track,
+.lu-strip:focus-within .lu-strip-track {
+    animation-play-state: paused;
+}
+
+@keyframes lu-strip-run {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+.lu-strip-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    white-space: nowrap;
+    font-size: 12px;
+    border-right: 1px solid rgba(255, 255, 255, .06);
+}
+
+.lu-strip-item img {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #1e2430;
+}
+
+.lu-strip-item b { color: #fff; font-weight: 700; }
+
+.lu-strip-item i {
+    font-style: normal;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.lu-strip-item i.win { color: #4ade80; }
+.lu-strip-item i.pick { color: #38bdf8; }
+.lu-strip-item i.ban { color: #f87171; }
+
+@media (prefers-reduced-motion: reduce) {
+    .lu-strip-track { animation: none; }
+    .lu-strip-window { overflow-x: auto; }
+}
+
+@media (max-width: 575px) {
+    .lu-strip-tag { padding: 8px 11px; font-size: 10px; }
+    .lu-strip-item { padding: 7px 13px; font-size: 11.5px; }
+}
+
+/* ---------------------------------------------------------------
+   Tabel peringkat hero di kolom samping
+   --------------------------------------------------------------- */
+.lu-rank {
+    margin-top: 14px;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 14px;
+    background: #171d27;
+}
+
+.lu-rank-head h2 {
     margin: 0;
     font-size: 14px;
     font-weight: 800;
     color: #fff;
 }
 
-.lu-ticker-head span {
+.lu-rank-head span {
     display: block;
-    margin-top: 2px;
+    margin: 2px 0 12px;
     font-size: 11px;
     color: #6b7686;
 }
 
-/* Jendela ticker: isi memudar di kedua tepi, bukan terpotong mendadak */
-.lu-ticker-window {
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+.lu-rank-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
 }
 
-.lu-ticker-track {
+.lu-rank-table th {
+    padding: 0 0 7px;
+    text-align: left;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    color: #6b7686;
+    border-bottom: 1px solid rgba(255, 255, 255, .07);
+}
+
+.lu-rank-table td {
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .04);
+    vertical-align: middle;
+}
+
+.lu-rank-table tr:last-child td { border-bottom: 0; }
+
+.lu-rank-table .c-no {
+    width: 20px;
+    color: #6b7686;
+    font-weight: 700;
+    text-align: center;
+}
+
+.lu-rank-table .c-num {
+    text-align: right;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    padding-left: 5px;
+}
+
+.lu-rank-table td.win { color: #4ade80; }
+.lu-rank-table td.pick { color: #38bdf8; }
+.lu-rank-table td.ban { color: #f87171; }
+
+.lu-rank-table .c-hero {
     display: flex;
-    width: max-content;
-    align-items: center;
-    animation: lu-ticker-run 60s linear infinite;
-    will-change: transform;
-}
-
-/* Gerakan berhenti saat isinya ingin dibaca */
-.lu-ticker:hover .lu-ticker-track,
-.lu-ticker:focus-within .lu-ticker-track {
-    animation-play-state: paused;
-}
-
-@keyframes lu-ticker-run {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-}
-
-.lu-ticker-item {
-    display: inline-flex;
     align-items: center;
     gap: 7px;
-    padding: 0 16px;
-    border-right: 1px solid rgba(255, 255, 255, .06);
-    white-space: nowrap;
-    font-size: 12px;
+    min-width: 0;
 }
 
-.lu-ticker-item img {
-    width: 26px;
-    height: 26px;
+.lu-rank-table .c-hero img {
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     object-fit: cover;
     flex: 0 0 auto;
     background: #11161f;
 }
 
-.lu-ticker-item b {
+.lu-rank-table .c-hero span {
     color: #fff;
-    font-weight: 700;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.lu-ticker-item i {
-    font-style: normal;
+/* Navigasi halaman */
+.lu-rank-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.lu-rank-nav button {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, .1);
+    background: transparent;
+    color: #9aa4b2;
+    font: inherit;
+    cursor: pointer;
+    transition: all .15s ease;
+}
+
+.lu-rank-nav button:hover:not(:disabled) {
+    color: #0d1117;
+    background: #a3e635;
+    border-color: #a3e635;
+}
+
+.lu-rank-nav button:disabled { opacity: .3; cursor: default; }
+
+.lu-rank-nav span {
+    font-size: 11.5px;
     font-weight: 700;
+    color: #9aa4b2;
     font-variant-numeric: tabular-nums;
 }
 
-.lu-ticker-item i.win { color: #4ade80; }
-.lu-ticker-item i.pick { color: #38bdf8; }
-.lu-ticker-item i.ban { color: #f87171; }
+/*
+ * Sidebar dipatok sticky. Setelah tabel peringkat hero ditambahkan, isinya
+ * bisa lebih tinggi daripada layar, dan bagian bawahnya menjadi mustahil
+ * dijangkau karena bagian atasnya selalu dipaku. Membatasi tingginya lalu
+ * membiarkannya bergulir sendiri membuat seluruh isi tetap terbaca.
+ *
+ * Hanya berlaku di lebar besar; pada layar kecil sidebar sudah tidak sticky.
+ */
+@media (min-width: 992px) {
+    .lu-product-sidebar {
+        max-height: calc(100vh - 48px);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, .15) transparent;
+        /* Ruang agar bayangan panel terakhir tidak terpotong tepi gulir */
+        padding-bottom: 2px;
+    }
 
-/* Keterangan warna */
-.lu-ticker-legend {
-    display: flex;
-    gap: 14px;
-    padding: 10px 14px 0;
-    font-size: 10.5px;
-    color: #6b7686;
-    text-transform: uppercase;
-    letter-spacing: .4px;
-}
-
-.lu-ticker-legend span {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.lu-ticker-legend i {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.lu-ticker-legend i.win { background: #4ade80; }
-.lu-ticker-legend i.pick { background: #38bdf8; }
-.lu-ticker-legend i.ban { background: #f87171; }
-
-@media (prefers-reduced-motion: reduce) {
-    .lu-ticker-track { animation: none; }
-    .lu-ticker-window { overflow-x: auto; }
+    .lu-product-sidebar::-webkit-scrollbar { width: 6px; }
+    .lu-product-sidebar::-webkit-scrollbar-track { background: transparent; }
+    .lu-product-sidebar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, .15);
+        border-radius: 999px;
+    }
 }

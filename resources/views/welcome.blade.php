@@ -89,6 +89,10 @@
         </div>
     </header>
 
+    {{-- Tempat halaman menitipkan baris berjalan selebar layar, tepat di bawah
+         menu navigasi. Halaman yang tidak mengisinya tidak terpengaruh. --}}
+    @stack('subheader')
+
     <div class="main-side-menu">
         <div class="main-side-menu-logo-area">
             <div class="thumb-logo">
