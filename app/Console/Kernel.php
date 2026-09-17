@@ -17,6 +17,13 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping(20)
             ->appendOutputTo(storage_path('logs/saweria-sync.log'));
 
+        // Dijadwalkan lebih rapat daripada masa simpannya (60 menit) supaya
+        // pengunjung tidak pernah menanggung waktu tunggu pengambilan data.
+        $schedule->command('gamestats:refresh')
+            ->everyThirtyMinutes()
+            ->withoutOverlapping(10)
+            ->appendOutputTo(storage_path('logs/gamestats.log'));
+
         // Menuntaskan pesanan yang detailnya belum terambil saat callback tiba,
         // sekaligus memperbarui status pesanan yang belum selesai.
         $schedule->command('saweria:sync-orders')

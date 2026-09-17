@@ -111,4 +111,55 @@
             search('catalog', results);
         }, 250);
     });
+
+    /*
+     * Section statistik hero.
+     *
+     * Tombol top up di section ini adalah pintu masuk pembelian tersendiri,
+     * jadi dicatat sebagai promosi GA4: view_promotion saat tabelnya benar
+     * benar terlihat, select_promotion saat tombolnya ditekan. Tanpa ini,
+     * GA4 tidak bisa memisahkan pembeli yang datang dari tabel meta dengan
+     * yang datang dari katalog biasa.
+     */
+    const statBoxes = [...document.querySelectorAll('[data-game-stats]')];
+
+    const promotionOf = box => ({
+        promotion_id: box.id || 'game-stats',
+        promotion_name: 'Hero Meta Terkini',
+        creative_name: box.querySelector('h3')?.textContent.trim() || '',
+        creative_slot: 'homepage_hero_meta'
+    });
+
+    if (statBoxes.length && 'IntersectionObserver' in window) {
+        const seenBoxes = new WeakSet();
+        const boxObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting || seenBoxes.has(entry.target)) return;
+                seenBoxes.add(entry.target);
+                emit('view_promotion', promotionOf(entry.target));
+            });
+        }, { threshold: 0.4 });
+
+        statBoxes.forEach(box => boxObserver.observe(box));
+    }
+
+    document.addEventListener('click', event => {
+        const cta = event.target.closest('.lu-gs-cta');
+        if (cta) {
+            const box = cta.closest('[data-game-stats]');
+            navigateWithEvent(event, cta, 'select_promotion', box ? promotionOf(box) : {});
+            return;
+        }
+
+        // Pindah halaman tabel menandakan orang menelusuri lebih jauh,
+        // bukan sekadar melihat sepuluh baris teratas.
+        const pager = event.target.closest('[data-gs-next], [data-gs-prev], [data-rank-next], [data-rank-prev]');
+        if (pager) {
+            const box = pager.closest('[data-game-stats], .lu-rank');
+            emit('hero_table_page', {
+                game: box?.querySelector('h3, h2')?.textContent.trim() || '',
+                direction: pager.matches('[data-gs-next], [data-rank-next]') ? 'next' : 'prev'
+            });
+        }
+    });
 })();

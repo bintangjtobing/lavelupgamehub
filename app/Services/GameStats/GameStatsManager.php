@@ -79,6 +79,22 @@ class GameStatsManager
     }
 
     /**
+     * Ambil ulang satu game, mengabaikan yang tersimpan.
+     *
+     * Dipakai perintah terjadwal supaya isi penyimpanan selalu diperbarui
+     * sebelum kedaluwarsa. Tanpa itu, pengunjung pertama setelah masa simpan
+     * habis yang menanggung waktu tunggu pengambilan data.
+     */
+    public function refresh(string $key): bool
+    {
+        $limit = max(1, (int) config('gamestats.limit', 30));
+
+        Cache::forget("gamestats.{$key}.{$limit}");
+
+        return $this->game($key) !== null;
+    }
+
+    /**
      * Kunci game untuk sebuah produk katalog, bila ada.
      */
     public function keyForSlug(string $slug): ?string
