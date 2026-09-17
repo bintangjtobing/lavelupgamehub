@@ -50,7 +50,7 @@ class ProductController extends Controller
             $data = $mapper->unavailable($item);
         }
 
-        return view('pages.product', $data + $this->heroStats($item, $request));
+        return view('pages.product', $data + $this->heroStats($item));
     }
 
     /**
@@ -60,44 +60,19 @@ class ProductController extends Controller
      * bisa dihubungi, nilainya null dan bagian tersebut tidak dirender --
      * halaman produk beserta daftar harganya tetap tampil utuh.
      */
-    protected function heroStats(CatalogItem $item, Request $request): array
+    protected function heroStats(CatalogItem $item): array
     {
-        $none = ['heroStats' => null, 'heroRank' => null, 'heroDays' => null, 'heroMetric' => null];
-
         if ($item->slug !== config('mlbb.slug')) {
-            return $none;
+            return ['heroStats' => null, 'heroDays' => null];
         }
 
-        $rank = (int) $request->query('rank', config('mlbb.default_rank'));
-        $days = (int) $request->query('hari', config('mlbb.default_range'));
-        $metric = (string) $request->query('urut', 'win_rate');
-
-        // Nilai dari alamat halaman tidak dipercaya begitu saja
-        if (! array_key_exists($rank, config('mlbb.ranks', []))) {
-            $rank = (int) config('mlbb.default_rank');
-        }
-
-        if (! array_key_exists($days, config('mlbb.ranges', []))) {
-            $days = (int) config('mlbb.default_range');
-        }
-
-        if (! in_array($metric, ['win_rate', 'pick_rate', 'ban_rate'], true)) {
-            $metric = 'win_rate';
-        }
-
-        $stats = app(HeroStatsClient::class)->heroes($rank, $days);
-
-        // Moonton selalu mengurutkan menurut win rate, jadi urutan untuk
-        // metrik lain disusun ulang di sini.
-        if ($stats && $metric !== 'win_rate') {
-            usort($stats['heroes'], fn ($a, $b) => $b[$metric] <=> $a[$metric]);
-        }
+        $days = (int) config('mlbb.default_range');
 
         return [
-            'heroStats' => $stats,
-            'heroRank' => $rank,
+            // Moonton sudah mengurutkan menurut win rate, jadi tidak ada
+            // pengurutan ulang di sisi kita.
+            'heroStats' => app(HeroStatsClient::class)->heroes((int) config('mlbb.default_rank'), $days),
             'heroDays' => $days,
-            'heroMetric' => $metric,
         ];
     }
 }

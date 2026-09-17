@@ -55,189 +55,124 @@
 @media (max-width: 575px) { .lu-product { padding-top: 28px; } .lu-product-hero { gap: 16px; align-items: flex-start; } .lu-product-hero img { width: 80px; height: 80px; border-radius: 12px; } .lu-product-hero h1 { font-size: 25px; } .lu-product-hero p { font-size: 12px; } .lu-product-panel { padding: 18px; } .lu-product-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } .lu-product-option { padding: 12px 10px; } }
 
 /* ---------------------------------------------------------------
-   Peringkat hero Mobile Legends
+   Ticker peringkat hero Mobile Legends
    --------------------------------------------------------------- */
-.lu-hero-stats {
-    margin-top: 32px;
-    padding: 22px;
+.lu-ticker {
+    margin-top: 14px;
+    padding: 14px 0 12px;
     border: 1px solid rgba(255, 255, 255, .08);
-    border-radius: 16px;
-    background: #1e2430;
-}
-
-.lu-hero-head h2 {
-    margin: 0 0 4px;
-    font-size: 20px;
-    font-weight: 800;
-    color: #fff;
-}
-
-.lu-hero-head p {
-    margin: 0 0 18px;
-    font-size: 13px;
-    color: #9aa4b2;
-}
-
-/* Penyaring */
-.lu-hero-filters {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.lu-hero-group {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-
-.lu-hero-group a {
-    padding: 6px 13px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, .08);
-    color: #9aa4b2;
-    text-decoration: none;
-    font-size: 12.5px;
-    font-weight: 600;
-    white-space: nowrap;
-    transition: all .15s ease;
-}
-
-.lu-hero-group a:hover { color: #fff; border-color: rgba(163, 230, 53, .5); }
-
-.lu-hero-group a.is-on {
-    background: #a3e635;
-    border-color: #a3e635;
-    color: #0d1117;
-}
-
-/* Daftar hero */
-.lu-hero-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    counter-reset: hero;
-}
-
-.lu-hero-row {
-    display: grid;
-    grid-template-columns: 30px 48px minmax(90px, 1fr) minmax(70px, 1.4fr) auto;
-    align-items: center;
-    gap: 12px;
-    padding: 9px 12px;
-    border-radius: 12px;
+    border-radius: 14px;
     background: #171d27;
-    border: 1px solid rgba(255, 255, 255, .05);
-}
-
-.lu-hero-rank {
-    font-size: 13px;
-    font-weight: 800;
-    color: #6b7686;
-    text-align: center;
-}
-
-.lu-hero-row:nth-child(1) .lu-hero-rank { color: #fbbf24; }
-.lu-hero-row:nth-child(2) .lu-hero-rank { color: #cbd5e1; }
-.lu-hero-row:nth-child(3) .lu-hero-rank { color: #d97706; }
-
-.lu-hero-face {
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
     overflow: hidden;
-    background: #11161f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-.lu-hero-face img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lu-ticker-head {
+    padding: 0 14px 10px;
+}
 
-.lu-hero-initial { font-weight: 800; color: #6b7686; }
-
-.lu-hero-name {
+.lu-ticker-head h2 {
+    margin: 0;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 800;
     color: #fff;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
-/* Batang perbandingan */
-.lu-hero-bar {
-    height: 8px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, .06);
-    overflow: hidden;
-}
-
-.lu-hero-bar .fill {
+.lu-ticker-head span {
     display: block;
-    height: 100%;
-    border-radius: 999px;
+    margin-top: 2px;
+    font-size: 11px;
+    color: #6b7686;
 }
 
-.lu-metric-win { background: linear-gradient(90deg, #4ade80, #a3e635); }
-.lu-metric-pick { background: linear-gradient(90deg, #38bdf8, #818cf8); }
-.lu-metric-ban { background: linear-gradient(90deg, #fb7185, #f87171); }
+/* Jendela ticker: isi memudar di kedua tepi, bukan terpotong mendadak */
+.lu-ticker-window {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
 
-/* Angka */
-.lu-hero-figures {
+.lu-ticker-track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    animation: lu-ticker-run 60s linear infinite;
+    will-change: transform;
+}
+
+/* Gerakan berhenti saat isinya ingin dibaca */
+.lu-ticker:hover .lu-ticker-track,
+.lu-ticker:focus-within .lu-ticker-track {
+    animation-play-state: paused;
+}
+
+@keyframes lu-ticker-run {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+.lu-ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 16px;
+    border-right: 1px solid rgba(255, 255, 255, .06);
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.lu-ticker-item img {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 auto;
+    background: #11161f;
+}
+
+.lu-ticker-item b {
+    color: #fff;
+    font-weight: 700;
+}
+
+.lu-ticker-item i {
+    font-style: normal;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.lu-ticker-item i.win { color: #4ade80; }
+.lu-ticker-item i.pick { color: #38bdf8; }
+.lu-ticker-item i.ban { color: #f87171; }
+
+/* Keterangan warna */
+.lu-ticker-legend {
     display: flex;
     gap: 14px;
-    text-align: right;
-}
-
-.lu-hero-figures span {
-    display: flex;
-    flex-direction: column;
-    min-width: 54px;
-    opacity: .5;
-}
-
-.lu-hero-figures span.is-active { opacity: 1; }
-.lu-hero-figures b { font-size: 13px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
-.lu-hero-figures small { font-size: 10px; color: #9aa4b2; text-transform: uppercase; letter-spacing: .4px; }
-
-.lu-hero-note {
-    margin: 16px 0 0;
-    font-size: 12px;
+    padding: 10px 14px 0;
+    font-size: 10.5px;
     color: #6b7686;
-    line-height: 1.6;
+    text-transform: uppercase;
+    letter-spacing: .4px;
 }
 
-@media (max-width: 767px) {
-    .lu-hero-stats { padding: 16px; }
+.lu-ticker-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
 
-    .lu-hero-row {
-        grid-template-columns: 24px 40px minmax(0, 1fr);
-        grid-template-areas:
-            "rank face name"
-            "bar  bar  bar"
-            "fig  fig  fig";
-        gap: 8px 10px;
-    }
+.lu-ticker-legend i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+}
 
-    .lu-hero-rank { grid-area: rank; }
-    .lu-hero-face { grid-area: face; width: 40px; height: 40px; }
-    .lu-hero-name { grid-area: name; }
-    .lu-hero-bar { grid-area: bar; }
-    .lu-hero-figures { grid-area: fig; justify-content: space-between; text-align: left; gap: 8px; }
-    .lu-hero-figures span { min-width: 0; }
+.lu-ticker-legend i.win { background: #4ade80; }
+.lu-ticker-legend i.pick { background: #38bdf8; }
+.lu-ticker-legend i.ban { background: #f87171; }
 
-    /* Penyaring digeser menyamping supaya tidak menumpuk */
-    .lu-hero-group {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        padding-bottom: 4px;
-        scrollbar-width: none;
-    }
-    .lu-hero-group::-webkit-scrollbar { display: none; }
-    .lu-hero-group a { flex: 0 0 auto; }
+@media (prefers-reduced-motion: reduce) {
+    .lu-ticker-track { animation: none; }
+    .lu-ticker-window { overflow-x: auto; }
 }
