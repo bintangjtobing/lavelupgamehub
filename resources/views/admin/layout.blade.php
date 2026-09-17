@@ -40,6 +40,10 @@
 
         @yield('content')
     </main>
+
+    {{-- Halaman panel menitipkan skripnya lewat @push('scripts'); tanpa stack ini
+         blok tersebut tidak pernah ikut dirender. --}}
+    @stack('scripts')
 </body>
 
 </html>
