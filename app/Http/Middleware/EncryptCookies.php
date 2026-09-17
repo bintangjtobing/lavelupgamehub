@@ -11,7 +11,13 @@ class EncryptCookies extends Middleware
      *
      * @var array<int, string>
      */
+    /*
+     * Cookie milik Google Analytics dipasang oleh skrip gtag di peramban, jadi
+     * isinya bukan hasil enkripsi Laravel. Tanpa pengecualian ini, pembacaan
+     * dari sisi server selalu gagal mendekripsi dan mengembalikan null.
+     */
     protected $except = [
-        //
+        '_ga',
+        '_ga_*',
     ];
 }

@@ -4,6 +4,7 @@ namespace App\Services\Saweria;
 
 use App\Models\Order;
 use App\Services\Analytics\OrderAttributor;
+use App\Services\Google\MeasurementProtocol;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -25,7 +26,8 @@ class OrderRecorder
      */
     public function __construct(
         protected SaweriaClient $client,
-        protected OrderAttributor $attributor
+        protected OrderAttributor $attributor,
+        protected MeasurementProtocol $measurement
     ) {
     }
 
@@ -122,6 +124,10 @@ class OrderRecorder
         try {
             $this->attributor->attribute($order);
             $this->attributor->recordFunnelEvents($order->refresh());
+
+            // Menutup funnel GA4: pembelian selesai di Saweria, jadi peramban
+            // tidak pernah sempat mengirim event purchase sendiri.
+            $this->measurement->purchase($order);
         } catch (Throwable $e) {
             Log::warning('Atribusi pesanan gagal.', [
                 'saweria_id' => $order->saweria_id,

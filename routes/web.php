@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\InsightsController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\CheckoutRedirectController;
@@ -54,6 +55,7 @@ Route::prefix('admin')->name('admin.')->middleware('noindex')->group(function ()
 
     Route::middleware('auth')->group(function () {
         Route::get('/', DashboardController::class)->name('dashboard');
+        Route::get('/insight', InsightsController::class)->name('insights');
         Route::get('/pesanan', [AdminOrderController::class, 'index'])->name('orders');
         Route::get('/pesanan/{saweriaId}', [AdminOrderController::class, 'show'])->name('orders.show');
         Route::post('/pesanan/{saweriaId}/segarkan', [AdminOrderController::class, 'refresh'])->name('orders.refresh');

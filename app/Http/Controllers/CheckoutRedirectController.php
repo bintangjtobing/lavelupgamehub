@@ -37,7 +37,12 @@ class CheckoutRedirectController extends Controller
                 'item_slug' => $item->slug,
                 'product_slug' => $product,
                 'value' => $this->price($request),
-                'meta' => ['product_name' => $this->productName($request)],
+                'meta' => array_filter([
+                    'product_name' => $this->productName($request),
+                    // Disimpan agar event purchase yang dikirim dari server nanti
+                    // menempel pada pengguna dan kampanye yang sama di GA4.
+                    'ga_client_id' => $this->gaClientId($request),
+                ]),
             ]);
         } catch (Throwable $e) {
             // Pencatatan gagal tidak boleh menghalangi orang membeli.
@@ -45,6 +50,23 @@ class CheckoutRedirectController extends Controller
         }
 
         return redirect()->away($target, 302);
+    }
+
+    /**
+     * Client id GA4 dari cookie _ga.
+     *
+     * Isinya berbentuk "GA1.1.1234567890.1700000000"; yang dipakai GA4 sebagai
+     * client id hanya dua ruas terakhir.
+     */
+    protected function gaClientId(Request $request): ?string
+    {
+        $raw = $request->cookie('_ga');
+
+        if (! is_string($raw) || ! preg_match('/^GA\d+\.\d+\.(\d+\.\d+)$/', $raw, $m)) {
+            return null;
+        }
+
+        return $m[1];
     }
 
     protected function price(Request $request): ?int
