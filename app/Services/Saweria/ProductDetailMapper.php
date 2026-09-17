@@ -50,7 +50,7 @@ class ProductDetailMapper
                 'name' => $name,
                 'category' => $this->text(data_get($product, 'category.name')),
                 'price' => (float) $price,
-                'checkout_url' => $this->checkoutUrl($item->topup_url, $slug),
+                'checkout_url' => $this->checkoutUrl($item, $slug, $name, (float) $price),
             ];
         }
 
@@ -80,16 +80,21 @@ class ProductDetailMapper
         ];
     }
 
-    protected function checkoutUrl(string $topupUrl, string $productSlug): string
+    /**
+     * Menunjuk ke perantara milik sendiri, bukan langsung ke Saweria.
+     *
+     * Perantara itu mencatat bahwa pengunjung menuju pembayaran, lalu segera
+     * meneruskannya. Tanpa langkah ini, pesanan yang masuk lewat webhook tidak
+     * bisa dihubungkan dengan kunjungan yang memicunya.
+     */
+    protected function checkoutUrl($item, string $productSlug, string $productName, float $price): string
     {
-        $separator = str_contains($topupUrl, '?') ? '&' : '?';
-
-        return $topupUrl.$separator.http_build_query(
-            ['item' => $productSlug],
-            '',
-            '&',
-            PHP_QUERY_RFC3986
-        );
+        return route('checkout.go', [
+            'slug' => $item->slug,
+            'item' => $productSlug,
+            'name' => $productName,
+            'price' => (int) round($price),
+        ]);
     }
 
     protected function fields(mixed $fields): array

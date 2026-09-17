@@ -11,6 +11,11 @@ class Order extends Model
 
     protected $fillable = [
         'saweria_id',
+        'session_id',
+        'attribution',
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
         'donator_name',
         'donator_email',
         'message',
@@ -50,6 +55,38 @@ class Order extends Model
     /**
      * Pesanan yang statusnya masih bisa berubah, jadi perlu diperiksa berkala.
      */
+    public function session()
+    {
+        return $this->belongsTo(VisitorSession::class, 'session_id');
+    }
+
+    /**
+     * Label sumber trafik pesanan. Kosong berarti pesanan tidak bisa
+     * dihubungkan dengan kunjungan mana pun, bukan berarti datang langsung.
+     */
+    public function getSourceLabelAttribute(): string
+    {
+        if ($this->utm_source) {
+            return $this->utm_medium
+                ? $this->utm_source.' / '.$this->utm_medium
+                : $this->utm_source;
+        }
+
+        return $this->session_id ? 'langsung' : 'tidak terlacak';
+    }
+
+    public function getStateLabelAttribute(): string
+    {
+        return [
+            'completed' => 'Selesai',
+            'processing' => 'Diproses',
+            'pending' => 'Menunggu bayar',
+            'failed' => 'Gagal',
+            'expired' => 'Kedaluwarsa',
+            'refunded' => 'Dikembalikan',
+        ][$this->state] ?? 'Belum diketahui';
+    }
+
     public function scopeUnsettled($query)
     {
         return $query->whereIn('state', ['pending', 'processing', 'unknown']);

@@ -41,6 +41,10 @@ class SeoController extends Controller
             'Allow: /',
             'Disallow: /games/search',
             'Disallow: /api/',
+            // Panel pengelola tidak untuk publik, dan /ke-checkout hanya
+            // pengalih menuju Saweria sehingga tidak perlu diindeks.
+            'Disallow: /admin',
+            'Disallow: /ke-checkout/',
             '',
             'Sitemap: '.$seo->url('/sitemap.xml'),
             '',

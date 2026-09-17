@@ -3,6 +3,7 @@
 namespace App\Services\Saweria;
 
 use App\Models\Order;
+use App\Services\Analytics\OrderAttributor;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -22,8 +23,10 @@ class OrderRecorder
      * ("16/09/2026 17:03 WIB"), sehingga tidak cocok disimpan ke kolom tanggal.
      * Penyimpanan harus lepas dari urusan tampilan.
      */
-    public function __construct(protected SaweriaClient $client)
-    {
+    public function __construct(
+        protected SaweriaClient $client,
+        protected OrderAttributor $attributor
+    ) {
     }
 
     /**
@@ -113,6 +116,18 @@ class OrderRecorder
             : null;
 
         $order->save();
+
+        // Setelah nama produk diketahui, pesanan bisa dicoba dihubungkan dengan
+        // kunjungan yang memicunya, lalu dicatat sebagai langkah akhir funnel.
+        try {
+            $this->attributor->attribute($order);
+            $this->attributor->recordFunnelEvents($order->refresh());
+        } catch (Throwable $e) {
+            Log::warning('Atribusi pesanan gagal.', [
+                'saweria_id' => $order->saweria_id,
+                'reason' => $e->getMessage(),
+            ]);
+        }
 
         return true;
     }

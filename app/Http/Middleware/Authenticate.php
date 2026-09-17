@@ -12,6 +12,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        return $request->expectsJson() ? null : route('login');
+        // Satu-satunya area bertanda masuk di situs ini adalah panel pengelola.
+        return $request->expectsJson() ? null : route('admin.login');
     }
 }

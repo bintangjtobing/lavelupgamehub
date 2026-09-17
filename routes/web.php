@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\CheckoutRedirectController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\OrderTrackingController;
@@ -36,6 +40,25 @@ Route::post('/track-order', [OrderTrackingController::class, 'lookup'])
 // keasliannya diperiksa lewat tanda tangan HMAC di controller.
 Route::post('/webhooks/saweria', SaweriaWebhookController::class)
     ->middleware('throttle:120,1')->name('webhooks.saweria');
+
+
+// Perantara sebelum berpindah ke pembayaran Saweria; mencatat langkah checkout.
+Route::get('/ke-checkout/{slug}', CheckoutRedirectController::class)
+    ->middleware('throttle:120,1')->name('checkout.go');
+
+// Panel pengelola
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/masuk', [LoginController::class, 'show'])->middleware('guest')->name('login');
+    Route::post('/masuk', [LoginController::class, 'login'])->middleware(['guest', 'throttle:10,1']);
+    Route::post('/keluar', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/', DashboardController::class)->name('dashboard');
+        Route::get('/pesanan', [AdminOrderController::class, 'index'])->name('orders');
+        Route::get('/pesanan/{saweriaId}', [AdminOrderController::class, 'show'])->name('orders.show');
+        Route::post('/pesanan/{saweriaId}/segarkan', [AdminOrderController::class, 'refresh'])->name('orders.refresh');
+    });
+});
 
 Route::get('/faq', function () {
     $reviews = Review::published()->get();
