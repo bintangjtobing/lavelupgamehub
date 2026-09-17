@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InsightsController;
+use App\Http\Controllers\Admin\ShortLinkController as AdminShortLinkController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\CheckoutRedirectController;
+use App\Http\Controllers\ShortLinkController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\OrderTrackingController;
@@ -43,6 +45,11 @@ Route::post('/webhooks/saweria', SaweriaWebhookController::class)
     ->middleware('throttle:120,1')->name('webhooks.saweria');
 
 
+// Tautan pendek: levelupgamehub.com/s/{kode}
+Route::get('/s/{code}', ShortLinkController::class)
+    ->where('code', '[A-Za-z0-9\-]{1,40}')
+    ->middleware('throttle:240,1')->name('shortlink');
+
 // Perantara sebelum berpindah ke pembayaran Saweria; mencatat langkah checkout.
 Route::get('/ke-checkout/{slug}', CheckoutRedirectController::class)
     ->middleware('throttle:120,1')->name('checkout.go');
@@ -56,6 +63,11 @@ Route::prefix('admin')->name('admin.')->middleware('noindex')->group(function ()
     Route::middleware('auth')->group(function () {
         Route::get('/', DashboardController::class)->name('dashboard');
         Route::get('/insight', InsightsController::class)->name('insights');
+        Route::get('/tautan', [AdminShortLinkController::class, 'index'])->name('shortlinks');
+        Route::post('/tautan', [AdminShortLinkController::class, 'store'])->name('shortlinks.store');
+        Route::put('/tautan/{shortLink}', [AdminShortLinkController::class, 'update'])->name('shortlinks.update');
+        Route::post('/tautan/{shortLink}/alih', [AdminShortLinkController::class, 'toggle'])->name('shortlinks.toggle');
+        Route::delete('/tautan/{shortLink}', [AdminShortLinkController::class, 'destroy'])->name('shortlinks.destroy');
         Route::get('/pesanan', [AdminOrderController::class, 'index'])->name('orders');
         Route::get('/pesanan/{saweriaId}', [AdminOrderController::class, 'show'])->name('orders.show');
         Route::post('/pesanan/{saweriaId}/segarkan', [AdminOrderController::class, 'refresh'])->name('orders.refresh');

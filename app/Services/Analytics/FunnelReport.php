@@ -83,12 +83,11 @@ class FunnelReport
 
         return [
             'sessions' => $sessionCount,
-            'page_views' => TrackingEvent::where('name', TrackingEvent::PAGE_VIEW)
-                ->whereBetween('occurred_at', [$this->since, $this->until])->count(),
-            'product_views' => TrackingEvent::where('name', TrackingEvent::PRODUCT_VIEW)
-                ->whereBetween('occurred_at', [$this->since, $this->until])->count(),
-            'checkout_clicks' => TrackingEvent::where('name', TrackingEvent::CHECKOUT_CLICK)
-                ->whereBetween('occurred_at', [$this->since, $this->until])->count(),
+            // Peristiwa ikut disaring ke sesi manusia; kalau tidak, satu perayap
+            // yang menyusuri 118 halaman akan terbaca sebagai lonjakan trafik.
+            'page_views' => $this->countEvents(TrackingEvent::PAGE_VIEW, $sessions),
+            'product_views' => $this->countEvents(TrackingEvent::PRODUCT_VIEW, $sessions),
+            'checkout_clicks' => $this->countEvents(TrackingEvent::CHECKOUT_CLICK, $sessions),
             'orders' => (clone $orders)->count(),
             'orders_paid' => $paidCount,
             'revenue' => (int) (clone $paid)->sum('amount_raw'),
@@ -103,7 +102,7 @@ class FunnelReport
      */
     public function sources(int $limit = 12): array
     {
-        $sessions = VisitorSession::whereBetween('started_at', [$this->since, $this->until])
+        $sessions = VisitorSession::humans()->whereBetween('started_at', [$this->since, $this->until])
             ->get(['id', 'utm_source', 'utm_medium', 'referrer_host']);
 
         $grouped = [];
@@ -186,7 +185,7 @@ class FunnelReport
             $cursor->addDay();
         }
 
-        foreach (VisitorSession::whereBetween('started_at', [$this->since, $this->until])->get(['started_at']) as $s) {
+        foreach (VisitorSession::humans()->whereBetween('started_at', [$this->since, $this->until])->get(['started_at']) as $s) {
             $key = $s->started_at->toDateString();
             if (isset($days[$key])) {
                 $days[$key]['sessions']++;
@@ -203,9 +202,42 @@ class FunnelReport
         return array_values($days);
     }
 
+    protected function countEvents(string $name, $sessionIds): int
+    {
+        return TrackingEvent::where('name', $name)
+            ->whereBetween('occurred_at', [$this->since, $this->until])
+            ->whereIn('session_id', $sessionIds)
+            ->count();
+    }
+
+    /**
+     * Ringkasan lalu lintas bot, untuk ditampilkan terpisah di panel.
+     */
+    public function bots(int $limit = 8): array
+    {
+        $sessions = VisitorSession::where('is_bot', true)
+            ->whereBetween('started_at', [$this->since, $this->until])
+            ->get(['bot_name', 'page_views']);
+
+        $grouped = [];
+        foreach ($sessions as $session) {
+            $key = $session->bot_name ?: 'lainnya';
+            $grouped[$key] ??= ['label' => $key, 'sessions' => 0, 'page_views' => 0];
+            $grouped[$key]['sessions']++;
+            $grouped[$key]['page_views'] += (int) $session->page_views;
+        }
+
+        usort($grouped, fn ($a, $b) => $b['sessions'] <=> $a['sessions']);
+
+        return [
+            'total' => $sessions->count(),
+            'rows' => array_slice($grouped, 0, $limit),
+        ];
+    }
+
     protected function sessionsInRange()
     {
-        return VisitorSession::whereBetween('started_at', [$this->since, $this->until])
+        return VisitorSession::humans()->whereBetween('started_at', [$this->since, $this->until])
             ->select('id')->pluck('id');
     }
 

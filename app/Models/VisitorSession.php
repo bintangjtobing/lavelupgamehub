@@ -20,6 +20,8 @@ class VisitorSession extends Model
         'referrer_host',
         'landing_path',
         'device',
+        'is_bot',
+        'bot_name',
         'page_views',
         'product_views',
         'checkout_clicks',
@@ -28,9 +30,19 @@ class VisitorSession extends Model
     ];
 
     protected $casts = [
+        'is_bot' => 'boolean',
         'started_at' => 'datetime',
         'last_seen_at' => 'datetime',
     ];
+
+    /**
+     * Kunjungan manusia. Dipakai seluruh laporan agar bot tidak
+     * mengaburkan angka konversi.
+     */
+    public function scopeHumans($query)
+    {
+        return $query->where('is_bot', false);
+    }
 
     public function events()
     {

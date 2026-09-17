@@ -21,6 +21,10 @@ use Illuminate\Support\Str;
  */
 class VisitorTracker
 {
+    public function __construct(protected BotDetector $bots)
+    {
+    }
+
     public const COOKIE = 'lu_vid';
 
     protected const LIFETIME_MINUTES = 60 * 24 * 90; // 90 hari
@@ -47,6 +51,7 @@ class VisitorTracker
         $now = Carbon::now();
 
         $session = VisitorSession::find($id);
+        $bot = $this->bots->inspect($request);
 
         if ($session === null) {
             $session = VisitorSession::create([
@@ -60,6 +65,8 @@ class VisitorTracker
                 'referrer_host' => $this->referrerHost($request),
                 'landing_path' => $this->path($request),
                 'device' => $this->device($request),
+                'is_bot' => $bot[0],
+                'bot_name' => $bot[1],
                 'started_at' => $now,
                 'last_seen_at' => $now,
             ]);

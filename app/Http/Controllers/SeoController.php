@@ -45,6 +45,7 @@ class SeoController extends Controller
             // pengalih menuju Saweria sehingga tidak perlu diindeks.
             'Disallow: /admin',
             'Disallow: /ke-checkout/',
+            'Disallow: /s/',
             '',
             'Sitemap: '.$seo->url('/sitemap.xml'),
             '',

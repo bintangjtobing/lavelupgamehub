@@ -19,6 +19,8 @@
                     class="{{ request()->routeIs('admin.dashboard') ? 'is-on' : '' }}">Analitik</a>
                 <a href="{{ route('admin.insights') }}"
                     class="{{ request()->routeIs('admin.insights') ? 'is-on' : '' }}">Google Insight</a>
+                <a href="{{ route('admin.shortlinks') }}"
+                    class="{{ request()->routeIs('admin.shortlinks*') ? 'is-on' : '' }}">Tautan</a>
                 <a href="{{ route('admin.orders') }}"
                     class="{{ request()->routeIs('admin.orders*') ? 'is-on' : '' }}">Pesanan</a>
                 <a href="{{ url('/') }}" target="_blank" rel="noopener">Lihat situs &rarr;</a>
