@@ -869,3 +869,15 @@
     .lu-gs-nav { justify-content: center; }
     .lu-gs-cta { margin-left: 0; text-align: center; }
 }
+
+/* ---------------------------------------------------------------
+   Logo pada header mobile
+   style.css bawaan tema menyembunyikan .site-logo di layar <= 575px,
+   sehingga header HP hanya berisi tombol menu dan pencarian. Logo
+   ditampilkan lagi di sebelah kanan tombol menu.
+   --------------------------------------------------------------- */
+@media only screen and (max-width: 575px) {
+    .logo-wrapper { gap: 14px; }
+    .logo-wrapper .site-logo { display: block; order: 1; max-width: 130px; }
+    .logo-wrapper .site-logo img { display: block; width: 100%; height: auto; }
+}

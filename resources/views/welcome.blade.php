@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/lightcase.css')}}">
     <link rel="stylesheet" href="{{ asset('frontend/fileholder-style.css')}}" type="text/css">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css')}}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/levelup-custom.css')}}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/levelup-custom.css') }}?v={{ filemtime(public_path('frontend/css/levelup-custom.css')) }}">
     <style>
         :root {
             --base_color: #9CFF1E;
