@@ -2,7 +2,7 @@
 @section('title', 'Top Up ' . $item->name)
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('frontend/css/product-detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/product-detail.css') }}?v={{ filemtime(public_path('frontend/css/product-detail.css')) }}">
 @endpush
 
 @push('subheader')

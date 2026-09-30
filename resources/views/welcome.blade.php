@@ -87,11 +87,13 @@
                 </div>
             </div>
         </div>
-    </header>
 
-    {{-- Tempat halaman menitipkan baris berjalan selebar layar, tepat di bawah
-         menu navigasi. Halaman yang tidak mengisinya tidak terpengaruh. --}}
-    @stack('subheader')
+        {{-- Tempat halaman menitipkan baris berjalan selebar layar, tepat di bawah
+             menu navigasi. Berada di dalam <header> supaya ikut menempel saat
+             header menjadi fixed ketika halaman digulir. Halaman yang tidak
+             mengisinya tidak terpengaruh. --}}
+        @stack('subheader')
+    </header>
 
     <div class="main-side-menu">
         <div class="main-side-menu-logo-area">

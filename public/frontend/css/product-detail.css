@@ -280,15 +280,25 @@
  * membiarkannya bergulir sendiri membuat seluruh isi tetap terbaca.
  *
  * Hanya berlaku di lebar besar; pada layar kecil sidebar sudah tidak sticky.
+ *
+ * Titik tempelnya berada di bawah header fixed (88px), ditambah baris
+ * berjalan statistik hero (40px) bila halaman memilikinya, supaya bagian
+ * atas sidebar tidak tertutup.
  */
 @media (min-width: 992px) {
     .lu-product-sidebar {
-        max-height: calc(100vh - 48px);
+        top: 112px;
+        max-height: calc(100vh - 136px);
         overflow-y: auto;
         scrollbar-width: thin;
         scrollbar-color: rgba(255, 255, 255, .15) transparent;
         /* Ruang agar bayangan panel terakhir tidak terpotong tepi gulir */
         padding-bottom: 2px;
+    }
+
+    body:has(.lu-strip) .lu-product-sidebar {
+        top: 152px;
+        max-height: calc(100vh - 176px);
     }
 
     .lu-product-sidebar::-webkit-scrollbar { width: 6px; }
