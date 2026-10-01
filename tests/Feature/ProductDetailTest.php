@@ -71,7 +71,7 @@ class ProductDetailTest extends TestCase
                     'products' => [[
                         'product_id' => 1218,
                         'product_name' => '5 Diamonds',
-                        'slug' => '5 diamonds & bonus',
+                        'slug' => '5-diamonds-bonus',
                         'status' => 'ACTIVE',
                         'category' => ['name' => 'Diamond'],
                         'pricing' => [
@@ -105,9 +105,19 @@ class ProductDetailTest extends TestCase
                     'name' => '5 Diamonds',
                     'category' => 'Diamond',
                     'price' => 1625.0,
-                    'checkout_url' => 'https://saweria.co/levelup/toko-top-up/game-one?item=5%20diamonds%20%26%20bonus',
+                    // Lewat perantara sendiri dulu, supaya klik checkout tercatat
+                    'checkout_url' => route('checkout.go', [
+                        'slug' => 'game-one',
+                        'item' => '5-diamonds-bonus',
+                        'name' => '5 Diamonds',
+                        'price' => 1625,
+                    ]),
                 ]];
             });
+
+        // Perantara itu tetap mengantar pembeli ke paket yang dipilih di Saweria
+        $this->get($response->viewData('products')[0]['checkout_url'])
+            ->assertRedirect('https://saweria.co/levelup/toko-top-up/game-one?item=5-diamonds-bonus');
 
         Http::assertSent(function (Request $request) {
             return $request->url() === 'https://saweria.test/game-vouchers/game-one?username=levelup&streamer_id=streamer-1';
