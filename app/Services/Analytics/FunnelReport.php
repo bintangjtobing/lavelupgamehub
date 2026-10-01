@@ -142,13 +142,19 @@ class FunnelReport
      */
     public function products(int $limit = 12): array
     {
+        // Perayap menyusuri semua tautan produk dan checkout; tanpa saringan ini
+        // tabel produk menunjukkan minat bot, bukan minat pembeli.
+        $humans = VisitorSession::humans()->select('id');
+
         $views = TrackingEvent::where('name', TrackingEvent::PRODUCT_VIEW)
+            ->whereIn('session_id', $humans)
             ->whereBetween('occurred_at', [$this->since, $this->until])
             ->whereNotNull('item_slug')
             ->selectRaw('item_slug, COUNT(*) as total')
             ->groupBy('item_slug')->pluck('total', 'item_slug');
 
         $clicks = TrackingEvent::where('name', TrackingEvent::CHECKOUT_CLICK)
+            ->whereIn('session_id', $humans)
             ->whereBetween('occurred_at', [$this->since, $this->until])
             ->whereNotNull('item_slug')
             ->selectRaw('item_slug, COUNT(*) as total')

@@ -27,12 +27,14 @@ class Ga4Client
      */
     public function summary(int $days): array
     {
-        $rows = $this->runReport($days, [], [
+        $result = $this->runReport($days, [], [
             'totalUsers', 'newUsers', 'sessions', 'screenPageViews',
             'averageSessionDuration', 'engagementRate', 'bounceRate',
         ]);
 
-        $totals = $rows['totals'] ?? [];
+        // Tanpa dimensi, GA4 mengembalikan angka keseluruhan sebagai satu-satunya
+        // baris. Blok "totals" baru terisi bila metricAggregations diminta.
+        $totals = $result['rows'][0]['metrics'] ?? [];
 
         return [
             'users' => (int) ($totals['totalUsers'] ?? 0),
@@ -130,10 +132,7 @@ class Ga4Client
             ];
         }
 
-        return [
-            'rows' => $rows,
-            'totals' => $this->pair($metrics, $payload['totals'][0]['metricValues'] ?? []),
-        ];
+        return ['rows' => $rows];
     }
 
     protected function pair(array $names, array $values): array

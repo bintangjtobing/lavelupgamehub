@@ -156,7 +156,7 @@
                                 <td class="num"><strong>{{ $n($link->human_clicks) }}</strong></td>
                                 <td class="num lup-muted">{{ $n($link->clicks) }}</td>
                                 <td class="lup-muted">
-                                    {{ $link->last_clicked_at?->translatedFormat('d M, H:i') ?: 'belum' }}
+                                    {{ $link->last_clicked_at?->copy()->tz('Asia/Jakarta')->translatedFormat('d M, H:i \\W\\I\\B') ?: 'belum' }}
                                 </td>
                                 <td>
                                     <div style="display:flex; gap:6px">

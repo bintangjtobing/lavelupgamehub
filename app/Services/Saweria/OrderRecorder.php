@@ -203,8 +203,11 @@ class OrderRecorder
             return null;
         }
 
+        // Saweria mengirim waktu WIB ("...+07:00"), sedangkan Eloquent menyimpan
+        // jam dinding apa adanya tanpa mengonversi. Tanpa langkah ini pesanan
+        // tersimpan tujuh jam lebih maju daripada klik checkout yang memicunya.
         try {
-            return Carbon::parse($value);
+            return Carbon::parse($value)->setTimezone(config('app.timezone'));
         } catch (Throwable) {
             return null;
         }

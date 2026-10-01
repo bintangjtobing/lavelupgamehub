@@ -6,7 +6,6 @@ use App\Models\TrackingEvent;
 use App\Services\Analytics\VisitorTracker;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -33,23 +32,8 @@ class TrackVisitor
         }
 
         try {
-            $session = $this->tracker->resolve($request);
-
             $this->tracker->record($request, TrackingEvent::PAGE_VIEW);
-
-            if ($this->tracker->sessionId($request) === null) {
-                Cookie::queue(Cookie::make(
-                    VisitorTracker::COOKIE,
-                    $session->id,
-                    $this->tracker->cookieLifetime(),
-                    null,
-                    null,
-                    $request->secure(),
-                    true,   // httpOnly: cookie ini tidak perlu dibaca JavaScript
-                    false,
-                    'lax'
-                ));
-            }
+            $this->tracker->rememberSession($request);
         } catch (Throwable $e) {
             Log::warning('Pencatatan kunjungan gagal.', ['reason' => $e->getMessage()]);
         }

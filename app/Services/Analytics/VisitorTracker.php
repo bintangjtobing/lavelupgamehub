@@ -6,6 +6,7 @@ use App\Models\TrackingEvent;
 use App\Models\VisitorSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 
 /*
@@ -29,6 +30,12 @@ class VisitorTracker
 
     protected const LIFETIME_MINUTES = 60 * 24 * 90; // 90 hari
 
+    /**
+     * Peristiwa yang hanya terjadi setelah pengunjung membuka halaman lain di
+     * situs ini, sehingga cookie sesinya pasti sudah terpasang lebih dulu.
+     */
+    protected const FOLLOW_UP_EVENTS = [TrackingEvent::CHECKOUT_CLICK];
+
     protected ?VisitorSession $session = null;
 
     public function sessionId(Request $request): ?string
@@ -40,8 +47,11 @@ class VisitorTracker
 
     /**
      * Ambil sesi yang sedang berjalan, atau buat baru bila belum ada.
+     *
+     * $followUp menandai permintaan untuk langkah lanjutan, misalnya klik
+     * checkout, yang mustahil menjadi halaman pertama seorang pengunjung.
      */
-    public function resolve(Request $request): VisitorSession
+    public function resolve(Request $request, bool $followUp = false): VisitorSession
     {
         if ($this->session) {
             return $this->session;
@@ -52,6 +62,13 @@ class VisitorTracker
 
         $session = VisitorSession::find($id);
         $bot = $this->bots->inspect($request);
+
+        // Orang sungguhan tiba di langkah lanjutan dengan cookie dari halaman
+        // produk. Datang tanpa cookie berarti kliennya tidak menyimpan cookie:
+        // perayap yang menyusuri tautan sambil menyamar sebagai peramban.
+        if ($followUp && ! $bot[0] && $this->sessionId($request) === null) {
+            $bot = [true, 'tanpa cookie'];
+        }
 
         if ($session === null) {
             $session = VisitorSession::create([
@@ -91,7 +108,7 @@ class VisitorTracker
 
     public function record(Request $request, string $name, array $attributes = []): ?TrackingEvent
     {
-        $session = $this->resolve($request);
+        $session = $this->resolve($request, in_array($name, self::FOLLOW_UP_EVENTS, true));
 
         $event = TrackingEvent::create(array_merge([
             'session_id' => $session->id,
@@ -113,9 +130,27 @@ class VisitorTracker
         return $event;
     }
 
-    public function cookieLifetime(): int
+    /**
+     * Pasang cookie pengenal sesi bila peramban belum membawanya, supaya
+     * permintaan berikutnya tidak tercatat sebagai kunjungan baru.
+     */
+    public function rememberSession(Request $request): void
     {
-        return self::LIFETIME_MINUTES;
+        if ($this->session === null || $this->sessionId($request) !== null) {
+            return;
+        }
+
+        Cookie::queue(Cookie::make(
+            self::COOKIE,
+            $this->session->id,
+            self::LIFETIME_MINUTES,
+            null,
+            null,
+            $request->secure(),
+            true,   // httpOnly: cookie ini tidak perlu dibaca JavaScript
+            false,
+            'lax'
+        ));
     }
 
     /**

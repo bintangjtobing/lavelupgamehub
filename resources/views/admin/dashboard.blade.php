@@ -10,7 +10,7 @@
     <div class="lup-head">
         <div>
             <h1>Analitik</h1>
-            <p>{{ $days }} hari terakhir &middot; diperbarui {{ now()->translatedFormat('d M Y, H:i') }}</p>
+            <p>{{ $days }} hari terakhir &middot; diperbarui {{ now()->tz('Asia/Jakarta')->translatedFormat('d M Y, H:i') }} WIB</p>
         </div>
         <div class="lup-range">
             @foreach ([7 => '7 hari', 30 => '30 hari', 90 => '90 hari'] as $d => $label)
@@ -184,7 +184,7 @@
             <table class="lup-table">
                 <thead>
                     <tr>
-                        <th>Waktu</th>
+                        <th>Waktu (WIB)</th>
                         <th>Produk</th>
                         <th>Sumber</th>
                         <th>Status</th>
@@ -194,7 +194,7 @@
                 <tbody>
                     @forelse ($recentOrders as $order)
                         <tr>
-                            <td class="lup-muted">{{ ($order->ordered_at ?: $order->created_at)->translatedFormat('d M, H:i') }}</td>
+                            <td class="lup-muted">{{ ($order->ordered_at ?: $order->created_at)->copy()->tz('Asia/Jakarta')->translatedFormat('d M, H:i') }}</td>
                             <td>
                                 <a href="{{ route('admin.orders.show', $order->saweria_id) }}">
                                     {{ $order->product_name ?: 'Menunggu detail' }}

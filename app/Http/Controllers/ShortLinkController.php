@@ -47,6 +47,10 @@ class ShortLinkController extends Controller
                         'template' => $link->template,
                     ],
                 ]);
+
+                // Halaman tujuan harus melanjutkan sesi ini, bukan membuka sesi
+                // baru, supaya satu klik tautan tetap terhitung satu kunjungan.
+                $tracker->rememberSession($request);
             }
         } catch (Throwable $e) {
             // Pencatatan gagal tidak boleh menghalangi orang membuka tautannya.

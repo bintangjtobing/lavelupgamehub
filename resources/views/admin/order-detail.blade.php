@@ -48,15 +48,15 @@
                 <dd><strong>{{ $rp($order->amount_raw) }}</strong> {{ $order->currency }}</dd>
 
                 <dt>Dipesan</dt>
-                <dd>{{ $order->ordered_at?->translatedFormat('d M Y, H:i') ?: '-' }}</dd>
+                <dd>{{ $order->ordered_at?->copy()->tz('Asia/Jakarta')->translatedFormat('d M Y, H:i \\W\\I\\B') ?: '-' }}</dd>
 
                 <dt>Dibayar</dt>
-                <dd>{{ $order->paid_at?->translatedFormat('d M Y, H:i') ?: '-' }}</dd>
+                <dd>{{ $order->paid_at?->copy()->tz('Asia/Jakarta')->translatedFormat('d M Y, H:i \\W\\I\\B') ?: '-' }}</dd>
 
                 <dt>Detail terambil</dt>
                 <dd>
                     @if ($order->enriched_at)
-                        {{ $order->enriched_at->translatedFormat('d M Y, H:i') }}
+                        {{ $order->enriched_at->copy()->tz('Asia/Jakarta')->translatedFormat('d M Y, H:i \\W\\I\\B') }}
                     @else
                         <span class="lup-muted">belum ({{ $order->enrich_attempts }} percobaan)</span>
                     @endif
@@ -115,7 +115,7 @@
                 @foreach ($journey as $event)
                     <li>
                         <strong>{{ $event->label }}</strong>
-                        <span class="lup-muted">&middot; {{ $event->occurred_at->translatedFormat('d M, H:i:s') }}</span>
+                        <span class="lup-muted">&middot; {{ $event->occurred_at->copy()->tz('Asia/Jakarta')->translatedFormat('d M, H:i:s \\W\\I\\B') }}</span>
                         @if ($event->path)
                             <div class="lup-muted lup-mono">/{{ $event->path }}</div>
                         @endif

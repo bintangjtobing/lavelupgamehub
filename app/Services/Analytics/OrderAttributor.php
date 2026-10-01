@@ -38,8 +38,10 @@ class OrderAttributor
             return null;
         }
 
+        // Klik dari sesi bot (termasuk perayap tanpa cookie) tidak pernah
+        // berujung pembayaran, jadi tidak boleh merebut pesanan orang lain.
         $candidates = TrackingEvent::where('name', TrackingEvent::CHECKOUT_CLICK)
-            ->whereNotNull('session_id')
+            ->whereIn('session_id', VisitorSession::humans()->select('id'))
             ->whereBetween('occurred_at', [
                 $orderedAt->copy()->subMinutes(self::WINDOW_MINUTES),
                 $orderedAt->copy()->addMinutes(10),

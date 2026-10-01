@@ -59,7 +59,7 @@
                 <table class="lup-table">
                     <thead>
                         <tr>
-                            <th>Waktu</th>
+                            <th>Waktu (WIB)</th>
                             <th>Produk</th>
                             <th>Pembeli</th>
                             <th>Sumber</th>
@@ -72,8 +72,8 @@
                         @foreach ($orders as $order)
                             <tr>
                                 <td class="lup-muted">
-                                    {{ ($order->ordered_at ?: $order->created_at)->translatedFormat('d M Y') }}
-                                    <div>{{ ($order->ordered_at ?: $order->created_at)->format('H:i') }}</div>
+                                    {{ ($order->ordered_at ?: $order->created_at)->copy()->tz('Asia/Jakarta')->translatedFormat('d M Y') }}
+                                    <div>{{ ($order->ordered_at ?: $order->created_at)->copy()->tz('Asia/Jakarta')->format('H:i') }}</div>
                                 </td>
                                 <td>
                                     <a href="{{ route('admin.orders.show', $order->saweria_id) }}">

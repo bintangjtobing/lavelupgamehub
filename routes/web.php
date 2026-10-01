@@ -15,10 +15,24 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SaweriaWebhookController;
 use App\Http\Controllers\SeoController;
 use App\Models\Review;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CatalogController::class, 'home']);
+
+// Pemeriksaan kesehatan untuk pemantau uptime. Sengaja dilepas dari grup web
+// (tanpa sesi, cookie, maupun pelacakan kunjungan): pemantau memanggilnya tiap
+// menit, dan cukup memastikan aplikasi serta basis datanya hidup.
+Route::get('/up', function () {
+    DB::select('select 1');
+
+    return response('ok', 200, [
+        'Content-Type' => 'text/plain; charset=UTF-8',
+        'Cache-Control' => 'no-store',
+        'X-Robots-Tag' => 'noindex',
+    ]);
+})->withoutMiddleware('web')->name('health');
 
 Route::get('/about', function () {
     $reviews = Review::published()->get();
